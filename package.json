@@ -1,0 +1,25 @@
+{
+  "name": "lumens-visca",
+  "version": "1.0.0",
+  "api_version": "1.0.0",
+  "keywords": [
+    "Camera",
+    "Lumens"
+  ],
+  "manufacturer": "Lumens",
+  "product": [
+    "VC-A50P",
+    "VC-A61P",
+    "VC-A71P",
+    "VC-BC301P",
+    "VC-BC601P/VC-BC701P"
+  ],
+  "shortname": "Camera",
+  "description": "Module to control LUMENS cameras with Sony Visca protocol over IP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lumens Team",
+  "license": "MIT"
+}
