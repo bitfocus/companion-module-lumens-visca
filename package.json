@@ -1,7 +1,7 @@
 {
   "name": "lumens-visca",
-  "version": "1.0.0",
-  "api_version": "1.0.0",
+  "version": "1.0.1",
+  "api_version": "1.0.1",
   "keywords": [
     "Camera",
     "Lumens"
@@ -12,7 +12,8 @@
     "VC-A61P",
     "VC-A71P",
     "VC-BC301P",
-    "VC-BC601P/VC-BC701P"
+    "VC-BC601P/VC-BC701P",
+    "VC-TR1"
   ],
   "shortname": "Camera",
   "description": "Module to control LUMENS cameras with Sony Visca protocol over IP",
