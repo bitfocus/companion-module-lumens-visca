@@ -4,22 +4,22 @@ var debug;
 var log;
 
 var PRESET = [
-	{ id: '00', label: 'Preset 0' },
-	{ id: '01', label: 'Preset 1' },
-	{ id: '02', label: 'Preset 2' },
-	{ id: '03', label: 'Preset 3' },
-	{ id: '04', label: 'Preset 4' },
-	{ id: '05', label: 'Preset 5' },
-	{ id: '06', label: 'Preset 6' },
-	{ id: '07', label: 'Preset 7' },
-	{ id: '08', label: 'Preset 8' },
-	{ id: '09', label: 'Preset 9' },
-	{ id: '0A', label: 'Preset 10' },
-	{ id: '0B', label: 'Preset 11' },
-	{ id: '0C', label: 'Preset 12' },
-	{ id: '0D', label: 'Preset 13' },
-	{ id: '0E', label: 'Preset 14' },
-	{ id: '0F', label: 'Preset 15' },
+	{ id: '0', label: 'Preset 0' },
+	{ id: '1', label: 'Preset 1' },
+	{ id: '2', label: 'Preset 2' },
+	{ id: '3', label: 'Preset 3' },
+	{ id: '4', label: 'Preset 4' },
+	{ id: '5', label: 'Preset 5' },
+	{ id: '6', label: 'Preset 6' },
+	{ id: '7', label: 'Preset 7' },
+	{ id: '8', label: 'Preset 8' },
+	{ id: '9', label: 'Preset 9' },
+	{ id: 'A', label: 'Preset 10' },
+	{ id: 'B', label: 'Preset 11' },
+	{ id: 'C', label: 'Preset 12' },
+	{ id: 'D', label: 'Preset 13' },
+	{ id: 'E', label: 'Preset 14' },
+	{ id: 'F', label: 'Preset 15' },
 	{ id: '10', label: 'Preset 16' },
 	{ id: '11', label: 'Preset 17' },
 	{ id: '12', label: 'Preset 18' },
@@ -133,7 +133,136 @@ var PRESET = [
 	{ id: '7E', label: 'Preset 126' },
 	{ id: '7F', label: 'Preset 127' },
 ];
-
+var PRESET_TR1 = [
+	// { id: '0', label: 'Preset 0' },
+	// { id: '1', label: 'Preset 1' },
+	{ id: '2', label: 'Preset 2' },
+	{ id: '3', label: 'Preset 3' },
+	{ id: '4', label: 'Preset 4' },
+	// { id: '5', label: 'Preset 5' },
+	// { id: '6', label: 'Preset 6' },
+	// { id: '7', label: 'Preset 7' },
+	// { id: '8', label: 'Preset 8' },
+	{ id: '9', label: 'Preset 9' },
+	{ id: 'A', label: 'Preset 10' },
+	{ id: 'B', label: 'Preset 11' },
+	{ id: 'C', label: 'Preset 12' },
+	{ id: 'D', label: 'Preset 13' },
+	{ id: 'E', label: 'Preset 14' },
+	{ id: 'F', label: 'Preset 15' },
+	{ id: '10', label: 'Preset 16' },
+	{ id: '11', label: 'Preset 17' },
+	{ id: '12', label: 'Preset 18' },
+	{ id: '13', label: 'Preset 19' },
+	{ id: '14', label: 'Preset 20' },
+	{ id: '15', label: 'Preset 21' },
+	{ id: '16', label: 'Preset 22' },
+	{ id: '17', label: 'Preset 23' },
+	{ id: '18', label: 'Preset 24' },
+	{ id: '19', label: 'Preset 25' },
+	{ id: '1A', label: 'Preset 26' },
+	{ id: '1B', label: 'Preset 27' },
+	{ id: '1C', label: 'Preset 28' },
+	{ id: '1D', label: 'Preset 29' },
+	{ id: '1E', label: 'Preset 30' },
+	{ id: '1F', label: 'Preset 31' },
+	{ id: '20', label: 'Preset 32' },
+	{ id: '21', label: 'Preset 33' },
+	{ id: '22', label: 'Preset 34' },
+	{ id: '23', label: 'Preset 35' },
+	{ id: '24', label: 'Preset 36' },
+	{ id: '25', label: 'Preset 37' },
+	{ id: '26', label: 'Preset 38' },
+	{ id: '27', label: 'Preset 39' },
+	{ id: '28', label: 'Preset 40' },
+	{ id: '29', label: 'Preset 41' },
+	{ id: '2A', label: 'Preset 42' },
+	{ id: '2B', label: 'Preset 43' },
+	{ id: '2C', label: 'Preset 44' },
+	{ id: '2D', label: 'Preset 45' },
+	{ id: '2E', label: 'Preset 46' },
+	{ id: '2F', label: 'Preset 47' },
+	{ id: '30', label: 'Preset 48' },
+	{ id: '31', label: 'Preset 49' },
+	{ id: '32', label: 'Preset 50' },
+	{ id: '33', label: 'Preset 51' },
+	{ id: '34', label: 'Preset 52' },
+	{ id: '35', label: 'Preset 53' },
+	{ id: '36', label: 'Preset 54' },
+	{ id: '37', label: 'Preset 55' },
+	{ id: '38', label: 'Preset 56' },
+	{ id: '39', label: 'Preset 57' },
+	{ id: '3A', label: 'Preset 58' },
+	{ id: '3B', label: 'Preset 59' },
+	{ id: '3C', label: 'Preset 60' },
+	{ id: '3D', label: 'Preset 61' },
+	{ id: '3E', label: 'Preset 62' },
+	{ id: '3F', label: 'Preset 63' },
+	{ id: '40', label: 'Preset 64' },
+	{ id: '41', label: 'Preset 65' },
+	{ id: '42', label: 'Preset 66' },
+	{ id: '43', label: 'Preset 67' },
+	{ id: '44', label: 'Preset 68' },
+	{ id: '45', label: 'Preset 69' },
+	{ id: '46', label: 'Preset 70' },
+	{ id: '47', label: 'Preset 71' },
+	{ id: '48', label: 'Preset 72' },
+	{ id: '49', label: 'Preset 73' },
+	{ id: '4A', label: 'Preset 74' },
+	{ id: '4B', label: 'Preset 75' },
+	{ id: '4C', label: 'Preset 76' },
+	{ id: '4D', label: 'Preset 77' },
+	{ id: '4E', label: 'Preset 78' },
+	{ id: '4F', label: 'Preset 79' },
+	// { id: '50', label: 'Preset 80' },
+	// { id: '51', label: 'Preset 81' },
+	{ id: '52', label: 'Preset 82' },
+	{ id: '53', label: 'Preset 83' },
+	{ id: '54', label: 'Preset 84' },
+	{ id: '55', label: 'Preset 85' },
+	{ id: '56', label: 'Preset 86' },
+	{ id: '57', label: 'Preset 87' },
+	{ id: '58', label: 'Preset 88' },
+	{ id: '59', label: 'Preset 89' },
+	{ id: '5A', label: 'Preset 90' },
+	{ id: '5B', label: 'Preset 91' },
+	{ id: '5C', label: 'Preset 92' },
+	{ id: '5D', label: 'Preset 93' },
+	{ id: '5E', label: 'Preset 94' },
+	// { id: '5F', label: 'Preset 95' },
+	// { id: '60', label: 'Preset 96' },
+	{ id: '61', label: 'Preset 97' },
+	{ id: '62', label: 'Preset 98' },
+	// { id: '63', label: 'Preset 99' },
+	{ id: '64', label: 'Preset 100' },
+	{ id: '65', label: 'Preset 101' },
+	{ id: '66', label: 'Preset 102' },
+	{ id: '67', label: 'Preset 103' },
+	{ id: '68', label: 'Preset 104' },
+	{ id: '69', label: 'Preset 105' },
+	{ id: '6A', label: 'Preset 106' },
+	{ id: '6B', label: 'Preset 107' },
+	{ id: '6C', label: 'Preset 108' },
+	{ id: '6D', label: 'Preset 109' },
+	{ id: '6E', label: 'Preset 110' },
+	{ id: '6F', label: 'Preset 111' },
+	{ id: '70', label: 'Preset 112' },
+	{ id: '71', label: 'Preset 113' },
+	{ id: '72', label: 'Preset 114' },
+	{ id: '73', label: 'Preset 115' },
+	{ id: '74', label: 'Preset 116' },
+	{ id: '75', label: 'Preset 117' },
+	{ id: '76', label: 'Preset 118' },
+	{ id: '77', label: 'Preset 119' },
+	{ id: '78', label: 'Preset 120' },
+	// { id: '79', label: 'Preset 121' },
+	// { id: '7A', label: 'Preset 122' },
+	// { id: '7B', label: 'Preset 123' },
+	{ id: '7C', label: 'Preset 124' },
+	{ id: '7D', label: 'Preset 125' },
+	{ id: '7E', label: 'Preset 126' },
+	{ id: '7F', label: 'Preset 127' },
+];
 var SPEED = [
 	{ id: '18', label: 'Speed 24 (Fast)' },
 	{ id: '17', label: 'Speed 23' },
@@ -144,31 +273,31 @@ var SPEED = [
 	{ id: '12', label: 'Speed 18' },
 	{ id: '11', label: 'Speed 17' },
 	{ id: '10', label: 'Speed 16' },
-	{ id: '0F', label: 'Speed 15' },
-	{ id: '0E', label: 'Speed 14' },
-	{ id: '0D', label: 'Speed 13' },
-	{ id: '0C', label: 'Speed 12' },
-	{ id: '0B', label: 'Speed 11' },
-	{ id: '0A', label: 'Speed 10' },
-	{ id: '09', label: 'Speed 09' },
-	{ id: '08', label: 'Speed 08' },
-	{ id: '07', label: 'Speed 07' },
-	{ id: '06', label: 'Speed 06' },
-	{ id: '05', label: 'Speed 05' },
-	{ id: '04', label: 'Speed 04' },
-	{ id: '03', label: 'Speed 03' },
-	{ id: '02', label: 'Speed 02' },
-	{ id: '01', label: 'Speed 01 (Slow)' }
+	{ id: 'F', label: 'Speed 15' },
+	{ id: 'E', label: 'Speed 14' },
+	{ id: 'D', label: 'Speed 13' },
+	{ id: 'C', label: 'Speed 12' },
+	{ id: 'B', label: 'Speed 11' },
+	{ id: 'A', label: 'Speed 10' },
+	{ id: '9', label: 'Speed 09' },
+	{ id: '8', label: 'Speed 08' },
+	{ id: '7', label: 'Speed 07' },
+	{ id: '6', label: 'Speed 06' },
+	{ id: '5', label: 'Speed 05' },
+	{ id: '4', label: 'Speed 04' },
+	{ id: '3', label: 'Speed 03' },
+	{ id: '2', label: 'Speed 02' },
+	{ id: '1', label: 'Speed 01 (Slow)' }
 ];
 
 var ZOOM_FOCUS_SPEED = [
-	{ id: '07', label: 'Speed 07 (Fast)' },
-	{ id: '06', label: 'Speed 06' },
-	{ id: '05', label: 'Speed 05' },
-	{ id: '04', label: 'Speed 04' },
-	{ id: '03', label: 'Speed 03' },
-	{ id: '02', label: 'Speed 02' },
-	{ id: '01', label: 'Speed 01 (Slow)' }
+	{ id: '7', label: 'Speed 07 (Fast)' },
+	{ id: '6', label: 'Speed 06' },
+	{ id: '5', label: 'Speed 05' },
+	{ id: '4', label: 'Speed 04' },
+	{ id: '3', label: 'Speed 03' },
+	{ id: '2', label: 'Speed 02' },
+	{ id: '1', label: 'Speed 01 (Slow)' }
 ];
 
 var CAMERAID = [
@@ -340,14 +469,18 @@ instance.prototype.config_fields = function () {
 			id: 'info',
 			width: 12,
 			label: 'Information',
-			value: 'This module controls LUMENS ' + `${self.config.product}` + ' cameras with VISCA over IP protocol',
-		},
-		{
-			type: 'text',
-			id: 'info2',
-			width: 12,
-			label: 'Internet Connection Settings',
-			value: 'Please fill in the form below about internet connection information'
+			value: `
+				<div class="alert alert-danger">
+					<h3>Lumens : 「We Make Your Job Easier」 !</h3>
+						This module controls LUMENS ${self.config.product} cameras with VISCA over IP protocol
+						<br>
+						For more information about Lumens Camera, please refer ... 
+						<br>
+						<a href="https://www.mylumens.com/en/Products" target="_new" class="btn btn-warning mr-1">Lumens Camera info.</a>				
+					<br><br><br>
+					<h4>Please fill in the IP below</h4>
+				</div>
+			`
 		},
 		{
 			type: 'textinput',
@@ -387,511 +520,53 @@ instance.prototype.destroy = function () {
 
 instance.prototype.init_presets = function () {
 	var self = this;
-
-	const System_NotSupportPreset_1 = self.config.product !== 'VC-A50P' ? [
-		{
-			category: 'System',
-			label: 'Tally Off',
-			bank: {
-				style: 'text',
-				text: 'Tally\\nOFF',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'tallyLampOff',
-				}
-			]
-		},
-		{
-			category: 'System',
-			label: 'Tally Mode - Red',
-			bank: {
-				style: 'text',
-				text: 'Tally\\nRed ON',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'tallyLampOn',
-				},
-				{
-					action: 'tallyModeRed',
-					delay: '15',
-				}
-			]
-		},
-	] : [];
-
-	const System_NotSupportPreset_2 = ((self.config.product !== 'VC-A50P') && (self.config.product !== "VC-BC301P")
-		&& (self.config.product !== "VC-BC601P/VC-BC701P")) ? [
-			{
-				category: 'System',
-				label: 'Tally Mode - Green',
+	var presets = [];
+	//=============== Save / Recall	Preset catalog =================
+	var index;
+	for (index = 1; index < 33; index++) {
+		if ((self.config.product !== 'VC-TR1') || ((index !== 1) && (index !== 5) && (index !== 6) && (index !== 7) && (index !== 8))) {
+			presets.push({
+				category: 'Save Preset',
+				label: 'Save Preset ' + parseInt(index),
 				bank: {
 					style: 'text',
-					text: 'Tally\\nGreen ON',
+					text: 'SAVE\\nPSET\\n' + parseInt(index),
 					size: '14',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
 				actions: [
 					{
-						action: 'tallyLampOn',
-					},
-					{
-						action: 'tallyModeGreen',
-						delay: '15',
+						action: 'savePset',
+						options: {
+							val: index.toString(16).toUpperCase(),
+						}
 					}
 				]
-			},
-		] : [];
-
-	const LensExp_NotSupportPreset = self.config.product !== "VC-BC301P" ? [
-		//=============== Lens catalog =================
-		{
-			category: 'Lens',
-			label: 'Zoom In',
-			bank: {
-				style: 'text',
-				text: 'ZOOM\\nIN',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0)
-			},
-			actions: [
-				{
-					action: 'zoomI',
-					options: { speed: '03' },
-				}
-			],
-			release_actions: [
-				{
-					action: 'zoomS',
-				}
-			]
-		},
-		{
-			category: 'Lens',
-			label: 'Zoom Out',
-			bank: {
-				style: 'text',
-				text: 'ZOOM\\nOUT',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0)
-			},
-			actions: [
-				{
-					action: 'zoomO',
-					options: { speed: '03' },
-				}
-			],
-			release_actions: [
-				{
-					action: 'zoomS',
-				}
-			]
-		},
-		{
-			category: 'Lens',
-			label: 'Focus Far',
-			bank: {
-				style: 'text',
-				text: 'FOCUS\\nFAR',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'focusM_MF',
+			});
+			presets.push({
+				category: 'Recall Preset',
+				label: 'Recall Preset ' + parseInt(index),
+				bank: {
+					style: 'text',
+					text: 'Recall\\nPSET\\n' + parseInt(index),
+					size: '14',
+					color: '16777215',
+					bgcolor: self.rgb(0, 0, 0),
 				},
-				{
-					action: 'focusF',
-					options: { speed: '01' },
-					delay: '15',
-				}
-			],
-			release_actions: [
-				{
-					action: 'focusS',
-				}
-			]
-		},
-		{
-			category: 'Lens',
-			label: 'Focus Near',
-			bank: {
-				style: 'text',
-				text: 'FOCUS\\nNEAR',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'focusM_MF',
-				},
-				{
-					action: 'focusN',
-					options: { speed: '01' },
-					delay: '15',
-				}
-			],
-			release_actions: [
-				{
-					action: 'focusS',
-				}
-			]
-		},
-		{
-			category: 'Lens',
-			label: 'Auto Focus',
-			bank: {
-				style: 'text',
-				text: 'AUTO\\nFOCUS',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'focusM_AF',
-				}
-			]
-		},
-		{
-			category: 'Lens',
-			label: 'One Push Auto Focus',
-			bank: {
-				style: 'text',
-				text: 'One Push\\nAF',
-				size: '14',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'focusM_MF',
-				},
-				{
-					action: 'focusOpaf',
-					delay: '15',
-				}
-			]
-		},
-		//=============== Exposure catalog =================
-		{
-			category: 'Exposure',
-			label: 'Exposure Iris Priority',
-			bank: {
-				style: 'text',
-				text: 'Iris\\nPri.',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'expModeIrisPri',
-				}
-			]
-		},
-		{
-			category: 'Exposure',
-			label: 'Iris Up',
-			bank: {
-				style: 'text',
-				text: 'IRIS\\nUP',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				// {
-				// 	action: 'expModeIrisPri',
-				// },
-				{
-					action: 'irisU',
-					// 	delay: '15',
-				}
-			]
-		},
-		{
-			category: 'Exposure',
-			label: 'Iris Down',
-			bank: {
-				style: 'text',
-				text: 'IRIS\\nDOWN',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				// {
-				// 	action: 'expModeIrisPri',
-				// },
-				{
-					action: 'irisD',
-					// 	delay: '15',
-				}
-			]
-		},
-	] : [];
+				actions: [
+					{
+						action: 'recallPset',
+						options: {
+							val: index.toString(16).toUpperCase(),
+						}
+					}
+				]
+			});
+		}
+	}
 
-	const PT_NotSupportPreset = ((self.config.product !== "VC-BC301P") && (self.config.product !== "VC-BC601P/VC-BC701P")) ? [
-		//=============== Pan/Tilt Catalog =================
-		{
-			category: 'Pan/Tilt',
-			label: 'UP',
-			bank: {
-				style: 'png',
-				text: '',
-				png64: image_up,
-				pngalignment: 'center:center',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0)
-			},
-			actions: [
-				{
-					action: 'up',
-					options: { panSpeed: '0C', tiltSpeed: '0C' },
-				}
-			],
-			release_actions: [
-				{
-					action: 'stop',
-				}
-			]
-		},
-		{
-			category: 'Pan/Tilt',
-			label: 'DOWN',
-			bank: {
-				style: 'png',
-				text: '',
-				png64: image_down,
-				pngalignment: 'center:center',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0)
-			},
-			actions: [
-				{
-					action: 'down',
-					options: { panSpeed: '0C', tiltSpeed: '0C' },
-				}
-			],
-			release_actions: [
-				{
-					action: 'stop',
-				}
-			]
-		},
-		{
-			category: 'Pan/Tilt',
-			label: 'LEFT',
-			bank: {
-				style: 'png',
-				text: '',
-				png64: image_left,
-				pngalignment: 'center:center',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0)
-			},
-			actions: [
-				{
-					action: 'left',
-					options: { panSpeed: '0C', tiltSpeed: '0C' },
-				}
-			],
-			release_actions: [
-				{
-					action: 'stop',
-				}
-			]
-		},
-		{
-			category: 'Pan/Tilt',
-			label: 'RIGHT',
-			bank: {
-				style: 'png',
-				text: '',
-				png64: image_right,
-				pngalignment: 'center:center',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0)
-			},
-			actions: [
-				{
-					action: 'right',
-					options: { panSpeed: '0C', tiltSpeed: '0C' },
-				}
-			],
-			release_actions: [
-				{
-					action: 'stop',
-				}
-			]
-		},
-		{
-			category: 'Pan/Tilt',
-			label: 'UP LEFT',
-			bank: {
-				style: 'png',
-				text: '',
-				png64: image_up_left,
-				pngalignment: 'center:center',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0)
-			},
-			actions: [
-				{
-					action: 'upLeft',
-					options: { panSpeed: '0C', tiltSpeed: '0C' },
-				}
-			],
-			release_actions: [
-				{
-					action: 'stop',
-				}
-			]
-		},
-		{
-			category: 'Pan/Tilt',
-			label: 'UP RIGHT',
-			bank: {
-				style: 'png',
-				text: '',
-				png64: image_up_right,
-				pngalignment: 'center:center',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0)
-			},
-			actions: [
-				{
-					action: 'upRight',
-					options: { panSpeed: '0C', tiltSpeed: '0C' },
-				}
-			],
-			release_actions: [
-				{
-					action: 'stop',
-				}
-			]
-		},
-		{
-			category: 'Pan/Tilt',
-			label: 'DOWN LEFT',
-			bank: {
-				style: 'png',
-				text: '',
-				png64: image_down_left,
-				pngalignment: 'center:center',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0)
-			},
-			actions: [
-				{
-					action: 'downLeft',
-					options: { panSpeed: '0C', tiltSpeed: '0C' },
-				}
-			],
-			release_actions: [
-				{
-					action: 'stop',
-				}
-			]
-		},
-		{
-			category: 'Pan/Tilt',
-			label: 'DOWN RIGHT',
-			bank: {
-				style: 'png',
-				text: '',
-				png64: image_down_right,
-				pngalignment: 'center:center',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0)
-			},
-			actions: [
-				{
-					action: 'downRight',
-					options: { panSpeed: '0C', tiltSpeed: '0C' },
-				}
-			],
-			release_actions: [
-				{
-					action: 'stop',
-				}
-			]
-		},
-		{
-			category: 'Pan/Tilt',
-			label: 'Home',
-			bank: {
-				style: 'text',
-				text: 'HOME',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0)
-			},
-			actions: [
-				{
-					action: 'home',
-				}
-			]
-		},
-	] : [];
-
-	const DigEffect_NotSupportPreset = self.config.product !== 'VC-A50P' ? [
-		{
-			category: 'Dig-Effect',
-			label: 'Mirror+Flip On',
-			bank: {
-				style: 'text',
-				text: 'MIRROR\\nFLIP\\nON',
-				size: '14',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'mirrorFlipOn',
-				}
-			]
-		},
-		{
-			category: 'Dig-Effect',
-			label: 'Mirror+Flip Off',
-			bank: {
-				style: 'text',
-				text: 'MIRROR\\nFLIP\\nOFF',
-				size: '14',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'mirrorFlipOff',
-				}
-			]
-		},
-	] : [];
-
-	var presets = [
+	var presets_default = [
 		//=============== System catalog =================
 		{
 			category: 'System',
@@ -1017,46 +692,7 @@ instance.prototype.init_presets = function () {
 				}
 			]
 		},
-		{
-			category: 'Exposure',
-			label: 'Gain Up',
-			bank: {
-				style: 'text',
-				text: 'GAIN\\nUP',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'expModeManu',
-				},
-				{
-					action: 'gainU',
-					delay: '15',
-				}
-			]
-		},
-		{
-			category: 'Exposure',
-			label: 'Gain Down',
-			bank: {
-				style: 'text',
-				text: 'GAIN\\nDOWN',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'expModeManu',
-				},
-				{
-					action: 'gainD',
-					delay: '15',
-				}
-			]
-		},
+
 		//=============== White Balance catalog =================
 		{
 			category: 'White Balance',
@@ -1174,23 +810,525 @@ instance.prototype.init_presets = function () {
 				}
 			]
 		},
-		//=============== Image catalog =================
+	];
+
+	const System_NotSupportPreset_1 = ((self.config.product !== 'VC-A50P') && (self.config.product !== "VC-TR1")) ? [
 		{
-			category: 'Image',
-			label: 'Image Mode - Default',
+			category: 'System',
+			label: 'Tally Off',
 			bank: {
 				style: 'text',
-				text: 'Default\\nImage',
+				text: 'Tally\\nOFF',
 				size: '18',
 				color: '16777215',
 				bgcolor: self.rgb(0, 0, 0),
 			},
 			actions: [
 				{
-					action: 'imageModeDefault',
+					action: 'tallyLampOff',
 				}
 			]
 		},
+		{
+			category: 'System',
+			label: 'Tally Mode - Red',
+			bank: {
+				style: 'text',
+				text: 'Tally\\nRed ON',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'tallyLampOn',
+				},
+				{
+					action: 'tallyModeRed',
+					delay: '15',
+				}
+			]
+		},
+	] : [];
+
+	const System_NotSupportPreset_2 = ((self.config.product !== 'VC-A50P') && (self.config.product !== "VC-BC301P")
+		&& (self.config.product !== "VC-BC601P/VC-BC701P") && (self.config.product !== "VC-TR1")) ? [
+			{
+				category: 'System',
+				label: 'Tally Mode - Green',
+				bank: {
+					style: 'text',
+					text: 'Tally\\nGreen ON',
+					size: '14',
+					color: '16777215',
+					bgcolor: self.rgb(0, 0, 0),
+				},
+				actions: [
+					{
+						action: 'tallyLampOn',
+					},
+					{
+						action: 'tallyModeGreen',
+						delay: '15',
+					}
+				]
+			},
+		] : [];
+
+	const Lens_NotSupportPreset = self.config.product !== "VC-BC301P" ? [
+		//=============== Lens catalog =================
+		{
+			category: 'Lens',
+			label: 'Zoom In',
+			bank: {
+				style: 'text',
+				text: 'ZOOM\\nIN',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'zoomI',
+					options: { speed: '3' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'zoomS',
+				}
+			]
+		},
+		{
+			category: 'Lens',
+			label: 'Zoom Out',
+			bank: {
+				style: 'text',
+				text: 'ZOOM\\nOUT',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'zoomO',
+					options: { speed: '3' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'zoomS',
+				}
+			]
+		},
+		{
+			category: 'Lens',
+			label: 'Focus Far',
+			bank: {
+				style: 'text',
+				text: 'FOCUS\\nFAR',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'focusM_MF',
+				},
+				{
+					action: 'focusF',
+					options: { speed: '1' },
+					delay: '15',
+				}
+			],
+			release_actions: [
+				{
+					action: 'focusS',
+				}
+			]
+		},
+		{
+			category: 'Lens',
+			label: 'Focus Near',
+			bank: {
+				style: 'text',
+				text: 'FOCUS\\nNEAR',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'focusM_MF',
+				},
+				{
+					action: 'focusN',
+					options: { speed: '1' },
+					delay: '15',
+				}
+			],
+			release_actions: [
+				{
+					action: 'focusS',
+				}
+			]
+		},
+		{
+			category: 'Lens',
+			label: 'Auto Focus',
+			bank: {
+				style: 'text',
+				text: 'AUTO\\nFOCUS',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'focusM_AF',
+				}
+			]
+		},
+		{
+			category: 'Lens',
+			label: 'One Push Auto Focus',
+			bank: {
+				style: 'text',
+				text: 'One Push\\nAF',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'focusM_MF',
+				},
+				{
+					action: 'focusOpaf',
+					delay: '15',
+				}
+			]
+		},
+	] : [];
+
+	const Exp_NotSupportPreset_1 = self.config.product !== "VC-BC301P" ? [
+		//=============== Exposure catalog =================
+		{
+			category: 'Exposure',
+			label: 'Exposure Iris Priority',
+			bank: {
+				style: 'text',
+				text: 'Iris\\nPri.',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'expModeIrisPri',
+				}
+			]
+		},
+		{
+			category: 'Exposure',
+			label: 'Iris Up',
+			bank: {
+				style: 'text',
+				text: 'IRIS\\nUP',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				// {
+				// 	action: 'expModeIrisPri',
+				// },
+				{
+					action: 'irisU',
+					// 	delay: '15',
+				}
+			]
+		},
+		{
+			category: 'Exposure',
+			label: 'Iris Down',
+			bank: {
+				style: 'text',
+				text: 'IRIS\\nDOWN',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				// {
+				// 	action: 'expModeIrisPri',
+				// },
+				{
+					action: 'irisD',
+					// 	delay: '15',
+				}
+			]
+		},
+	] : [];
+
+	const Exp_NotSupportPreset_2 = self.config.product !== "VC-TR1" ? [
+		//=============== Exposure catalog =================
+		{
+			category: 'Exposure',
+			label: 'Gain Up',
+			bank: {
+				style: 'text',
+				text: 'GAIN\\nUP',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'expModeManu',
+				},
+				{
+					action: 'gainU',
+					delay: '15',
+				}
+			]
+		},
+		{
+			category: 'Exposure',
+			label: 'Gain Down',
+			bank: {
+				style: 'text',
+				text: 'GAIN\\nDOWN',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'expModeManu',
+				},
+				{
+					action: 'gainD',
+					delay: '15',
+				}
+			]
+		},
+	] : [];
+
+	const PT_NotSupportPreset = ((self.config.product !== "VC-BC301P") && (self.config.product !== "VC-BC601P/VC-BC701P")) ? [
+		//=============== Pan/Tilt Catalog =================
+		{
+			category: 'Pan/Tilt',
+			label: 'UP',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_up,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'up',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'DOWN',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_down,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'down',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'LEFT',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_left,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'left',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'RIGHT',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_right,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'right',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'UP LEFT',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_up_left,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'upLeft',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'UP RIGHT',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_up_right,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'upRight',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'DOWN LEFT',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_down_left,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'downLeft',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'DOWN RIGHT',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_down_right,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'downRight',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'Home',
+			bank: {
+				style: 'text',
+				text: 'HOME',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'home',
+				}
+			]
+		},
+	] : [];
+
+	const Image_NotSupportPreset = self.config.product !== 'VC-TR1' ? [
+		//=============== Image catalog =================
 		{
 			category: 'Image',
 			label: 'Brightness Up',
@@ -1233,6 +1371,22 @@ instance.prototype.init_presets = function () {
 		},
 		{
 			category: 'Image',
+			label: 'Image Mode - Default',
+			bank: {
+				style: 'text',
+				text: 'Default\\nImage',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'imageModeDefault',
+				}
+			]
+		},
+		{
+			category: 'Image',
 			label: 'Sharpness Up',
 			bank: {
 				style: 'text',
@@ -1263,6 +1417,44 @@ instance.prototype.init_presets = function () {
 				}
 			]
 		},
+	] : [];
+
+	const DigEffect_NotSupportPreset_1 = ((self.config.product !== 'VC-A50P') && (self.config.product !== 'VC-TR1')) ? [
+		{
+			category: 'Dig-Effect',
+			label: 'Mirror+Flip On',
+			bank: {
+				style: 'text',
+				text: 'MIRROR\\nFLIP\\nON',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'mirrorFlipOn',
+				}
+			]
+		},
+		{
+			category: 'Dig-Effect',
+			label: 'Mirror+Flip Off',
+			bank: {
+				style: 'text',
+				text: 'MIRROR\\nFLIP\\nOFF',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'mirrorFlipOff',
+				}
+			]
+		},
+	] : [];
+
+	const DigEffect_NotSupportPreset_2 = (self.config.product !== 'VC-TR1') ? [
 		//=============== Dig-Effect catalog =================
 		{
 			category: 'Dig-Effect',
@@ -1328,56 +1520,56 @@ instance.prototype.init_presets = function () {
 				}
 			]
 		},
+	] : [];
+
+	const AutoTracking_NotSupportPreset = (self.config.product !== 'VC-TR1') ? [] : [
+		//=============== Auto-Tracking catalog =================
+		{
+			category: 'Auto Tracking',
+			label: 'Auto-Tracking On',
+			bank: {
+				style: 'text',
+				text: 'Tracking\\nON',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'autoTrackingOn',
+				}
+			]
+		},
+		{
+			category: 'Auto Tracking',
+			label: 'Auto-Tracking Off',
+			bank: {
+				style: 'text',
+				text: 'Tracking\\nOFF',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'autoTrackingOff',
+				}
+			]
+		},
 	];
 
+
+	Array.prototype.push.apply(presets, presets_default);
 	Array.prototype.push.apply(presets, System_NotSupportPreset_1);
 	Array.prototype.push.apply(presets, System_NotSupportPreset_2);
-	Array.prototype.push.apply(presets, LensExp_NotSupportPreset);
+	Array.prototype.push.apply(presets, Lens_NotSupportPreset);
+	Array.prototype.push.apply(presets, Exp_NotSupportPreset_1);
+	Array.prototype.push.apply(presets, Exp_NotSupportPreset_2);
 	Array.prototype.push.apply(presets, PT_NotSupportPreset);
-	Array.prototype.push.apply(presets, DigEffect_NotSupportPreset);
-
-	//=============== Save / Recall	Preset catalog =================
-	var index;
-	for (index = 1; index < 33; index++) {
-		presets.push({
-			category: 'Save Preset',
-			label: 'Save Preset ' + parseInt(index),
-			bank: {
-				style: 'text',
-				text: 'SAVE\\nPSET\\n' + parseInt(index),
-				size: '14',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'savePset',
-					options: {
-						val: '0' + index.toString(16).toUpperCase(),
-					}
-				}
-			]
-		});
-		presets.push({
-			category: 'Recall Preset',
-			label: 'Recall Preset ' + parseInt(index),
-			bank: {
-				style: 'text',
-				text: 'Recall\\nPSET\\n' + parseInt(index),
-				size: '14',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'recallPset',
-					options: {
-						val: '0' + index.toString(16).toUpperCase(),
-					}
-				}
-			]
-		});
-	}
+	Array.prototype.push.apply(presets, Image_NotSupportPreset);
+	Array.prototype.push.apply(presets, DigEffect_NotSupportPreset_1);
+	Array.prototype.push.apply(presets, DigEffect_NotSupportPreset_2);
+	Array.prototype.push.apply(presets, AutoTracking_NotSupportPreset);
 
 	self.setPresetDefinitions(presets);
 };
@@ -1386,12 +1578,12 @@ instance.prototype.actions = function (system) {
 	var self = this;
 
 	const System_NotSupportActions_1 = (
-		(self.config.product !== 'VC-A50P') && (self.config.product !== "VC-BC301P") && (self.config.product !== "VC-BC601P/VC-BC701P")) ? {
+		(self.config.product !== 'VC-A50P') && (self.config.product !== 'VC-TR1') && (self.config.product !== "VC-BC301P") && (self.config.product !== "VC-BC601P/VC-BC701P")) ? {
 			'tallyModeGreen': { label: 'Tally Mode - Green' },
 			'tallyModeYellow': { label: 'Tally Mode - Yellow' },
 		} : {}
 
-	const System_NotSupportActions_2 = (self.config.product !== 'VC-A50P') ? {
+	const System_NotSupportActions_2 = ((self.config.product !== 'VC-A50P') && (self.config.product !== 'VC-TR1')) ? {
 		'tallyModeRed': { label: 'Tally Mode - Red' },
 		'tallyLampOn': { label: 'Tally Lamp On' },
 		'tallyLampOff': { label: 'Tally Lamp Off' },
@@ -1403,14 +1595,14 @@ instance.prototype.actions = function (system) {
 				type: 'dropdown',
 				label: 'Pan Speed Setting',
 				id: 'panSpeed',
-				default: '0C',
+				default: 'C',
 				choices: SPEED
 			},
 			{
 				type: 'dropdown',
 				label: 'Tilt Speed Setting',
 				id: 'tiltSpeed',
-				default: '0C',
+				default: 'C',
 				choices: SPEED
 			}
 		]
@@ -1439,13 +1631,13 @@ instance.prototype.actions = function (system) {
 				type: 'dropdown',
 				label: 'Speed Setting',
 				id: 'speed',
-				default: '03',
+				default: '3',
 				choices: ZOOM_FOCUS_SPEED
 			},
 		]
 	}
 
-	const Lens_Exp_NotSupportActions = (self.config.product !== "VC-BC301P") ? {
+	const Lens_NotSupportActions = (self.config.product !== "VC-BC301P") ? {
 		//=============== Lens catalog =================
 		'zoomS': { label: 'Zoom Stop' },
 		'zoomI': { label: 'Zoom In', ...zoomFocusOptions },
@@ -1456,28 +1648,99 @@ instance.prototype.actions = function (system) {
 		'focusM_AF': { label: 'Auto Focus Mode' },
 		'focusM_MF': { label: 'Manual Focus Mode' },
 		'focusOpaf': { label: 'One Push Auto Focus' },
+	} : {}
+
+	const Exp_NotSupportActions_1 = (self.config.product !== "VC-BC301P") ? {
 		//=============== Exposure catalog =================
 		'expModeIrisPri': { label: 'Exposure Mode - Iris Priority' },
 		'irisU': { label: 'Iris Up' },
 		'irisD': { label: 'Iris Down' },
 	} : {}
 
-	const DigEffect_NotSupportActions = (self.config.product !== 'VC-A50P') ? {
+	const Exp_NotSupportActions_2 = (self.config.product !== "VC-TR1") ? {
+		//=============== Exposure catalog =================
+		'gainU': { label: 'Gain Up' },
+		'gainD': { label: 'Gain Down' },
+		'expCompOn': { label: 'Exposure Compensation On' },
+		'expCompOff': { label: 'Exposure Compensation Off' },
+	} : {}
+
+	const Image_NotSupportActions = (self.config.product !== "VC-TR1") ? {
+		//=============== Image catalog =================
+		'imageModeDefault': { label: 'Image Mode - Default' },
+		'imageModeCustom': { label: 'Image Mode - Custom' },
+		'sharpU': { label: 'Sharpness Up' },
+		'sharpD': { label: 'Sharpness Down' },
+		'brightU': { label: 'Bright Up' },
+		'brightD': { label: 'Bright Down' },
+	} : {}
+
+	const DigEffect_NotSupportActions_1 = (self.config.product !== 'VC-TR1') ? {
+		//=============== Dig-Effect catalog =================
+		'mirrorOn': { label: 'Mirror On' },
+		'mirrorOff': { label: 'Mirror Off' },
+		'flipOn': { label: 'Flip On' },
+		'flipOff': { label: 'Flip Off' },
+	} : {}
+
+	const DigEffect_NotSupportActions_2 = ((self.config.product !== 'VC-A50P') && (self.config.product !== 'VC-TR1')) ? {
 		'mirrorFlipOn': { label: 'Mirror + Flip On' },
 		'mirrorFlipOff': { label: 'Mirror + Flip Off' },
 	} : {}
 
-	const presetOptions = {
-		options: [
-			{
-				type: 'dropdown',
-				label: 'Preset Nr.',
-				//				default: '00',
-				id: 'PresetVal',
-				choices: PRESET
-			}
-		]
+	const AutoTracking_NotSupportActions = (self.config.product !== 'VC-TR1') ? {} : {
+		'autoTrackingOn': { label: 'Auto Tracking On' },
+		'autoTrackingOff': { label: 'Auto Tracking Off' },
 	}
+
+	const Preset_SupportActions = (self.config.product !== 'VC-TR1') ? {
+		//=============== Save / Recall	Preset catalog =================
+		'savePset': {
+			label: 'Save Preset',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Preset Nr.',
+					id: 'val',
+					choices: PRESET
+				}
+			]
+		},
+		'recallPset': {
+			label: 'Recall Preset',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Preset Nr.',
+					id: 'val',
+					choices: PRESET
+				}
+			]
+		},
+	} : {
+			'savePset': {
+				label: 'Save Preset',
+				options: [
+					{
+						type: 'dropdown',
+						label: 'Preset Nr.',
+						id: 'val',
+						choices: PRESET_TR1
+					}
+				]
+			},
+			'recallPset': {
+				label: 'Recall Preset',
+				options: [
+					{
+						type: 'dropdown',
+						label: 'Preset Nr.',
+						id: 'val',
+						choices: PRESET_TR1
+					}
+				]
+			},
+		}
 
 	const btnActions = {
 		//=============== System catalog =================
@@ -1496,7 +1759,7 @@ instance.prototype.actions = function (system) {
 		...PT_NotSupportActions,
 
 		//=============== Lens catalog =================
-		...Lens_Exp_NotSupportActions,
+		...Lens_NotSupportActions,
 
 		//=============== Exposure catalog =================
 		'expModeAuto': { label: 'Exposure Mode - Auto' },
@@ -1504,14 +1767,12 @@ instance.prototype.actions = function (system) {
 		'expModeShutterPri': { label: 'Exposure Mode - Shutter Priority' },
 		'shutU': { label: 'Shutter Up' },
 		'shutD': { label: 'Shutter Down' },
-		'gainU': { label: 'Gain Up' },
-		'gainD': { label: 'Gain Down' },
-		'expCompOn': { label: 'Exposure Compensation On' },
-		'expCompOff': { label: 'Exposure Compensation Off' },
 		'expCompUp': { label: 'Exposure Compensation Up' },
 		'expCompDown': { label: 'Exposure Compensation Down' },
 		'backLightOn': { label: 'BackLight On' },
 		'backLightOff': { label: 'BackLight Off' },
+		...Exp_NotSupportActions_1,
+		...Exp_NotSupportActions_2,
 
 		//=============== White Balance catalog =================
 		'wbModeAuto': { label: 'White Balance Mode - Auto' },
@@ -1524,23 +1785,17 @@ instance.prototype.actions = function (system) {
 		'wbBGainD': { label: 'WB Blue GAIN Down' },
 
 		//=============== Image catalog =================
-		'imageModeDefault': { label: 'Image Mode - Default' },
-		'imageModeCustom': { label: 'Image Mode - Custom' },
-		'brightU': { label: 'Bright Up' },
-		'brightD': { label: 'Bright Down' },
-		'sharpU': { label: 'Sharpness Up' },
-		'sharpD': { label: 'Sharpness Down' },
+		...Image_NotSupportActions,
 
 		//=============== Save / Recall	Preset catalog =================
-		'savePset': { label: 'Save Preset', ...presetOptions },
-		'recallPset': { label: 'Recall Preset', ...presetOptions },
+		...Preset_SupportActions,
 
 		//=============== Dig-Effect catalog =================
-		'mirrorOn': { label: 'Mirror On' },
-		'mirrorOff': { label: 'Mirror Off' },
-		'flipOn': { label: 'Flip On' },
-		'flipOff': { label: 'Flip Off' },
-		...DigEffect_NotSupportActions,
+		...DigEffect_NotSupportActions_1,
+		...DigEffect_NotSupportActions_2,
+
+		//=============== Auto-Tracking catalog ===============
+		...AutoTracking_NotSupportActions
 	}
 	self.system.emit('instance_actions', self.id, btnActions);
 }
@@ -1842,6 +2097,16 @@ instance.prototype.action = function (action) {
 		case 'mirrorFlipOff':
 			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x67\x03\xFF';
 			break;
+
+		//=============== Auto-Tracking catalog ===============
+		case 'autoTrackingOn':
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3F\x02\x50\xFF';
+			break;
+
+		case 'autoTrackingOff':
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3F\x02\x51\xFF';
+			break;
+
 	}
 	self.sendVISCACommand(cmd);
 };

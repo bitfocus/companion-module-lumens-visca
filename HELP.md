@@ -1,4 +1,4 @@
-## Lumens Visca
+## companion-module-lumens-visca
 
 This module uses the Sony Visca protocol to control Lumens cameras.
 
@@ -21,11 +21,11 @@ This module uses the Sony Visca protocol to control Lumens cameras.
 - Menu Down
 - Menu Left
 - Menu Right
-- Tally Lamp On, [VC-A50P is NOT supported]
-- Tally Lamp Off, [VC-A50P is NOT supported]
-- Tally Mode - Red : Enabled at Tally Lamp On mode, [VC-A50P is NOT supported]
-- Tally Mode - Green : Enabled at Tally Lamp On mode, [VC-A50P & VC-BC series are NOT supported]
-- Tally Mode - Yellow : Enabled at Tally Lamp On mode, [VC-A50P & VC-BC series are NOT supported]
+- Tally Lamp On, [VC-A50P & VC-TR1 are NOT supported]
+- Tally Lamp Off, [VC-A50P & VC-TR1 are NOT supported]
+- Tally Mode - Red : Enabled at Tally Lamp On mode, [VC-A50P & VC-TR1 are NOT supported]
+- Tally Mode - Green : Enabled at Tally Lamp On mode, [VC-A50P & VC-TR1 & VC-BC series are NOT supported]
+- Tally Mode - Yellow : Enabled at Tally Lamp On mode, [VC-A50P & VC-TR1 & VC-BC series are NOT supported]
 
 ##### === Pan/Tilt === [VC-BC Series are NOT supported]
 
@@ -63,12 +63,12 @@ This module uses the Sony Visca protocol to control Lumens cameras.
 - Iris Down: Enabled at Iris Priority or Manual Mode, [VC-BC301P is NOT supported]
 - Shutter Up : Enabled at AE Shutter Priority or Manual Mode
 - Shutter Down : Enabled at AE Shutter Priority or Manual Mode
-- Gain Up : Enabled at AE Manual Mode
-- Gain Down : Enabled at AE Manual Mode
-- Exposure Compensation On
-- Exposure Compensation Off
-- Exposure Compensation Up : Enabled at Exposure Compensation On mode
-- Exposure Compensation Down : Enabled at Exposure Compensation On mode
+- Gain Up : Enabled at AE Manual Mode, [VC-TR1 is NOT supported]
+- Gain Down : Enabled at AE Manual Mode, [VC-TR1 is NOT supported]
+- Exposure Compensation On, [VC-TR1 is NOT supported]
+- Exposure Compensation Off, [VC-TR1 is NOT supported]
+- Exposure Compensation Up : Enabled at Exposure Compensation On mode (VC-TR1 is always enabled Compensation On mode)
+- Exposure Compensation Down : Enabled at Exposure Compensation On mode(VC-TR1 is always enabled Compensation On mode)
 - BackLight On : Enabled at AE Full Auto Mode
 - BackLight Off : Enabled at AE Full Auto Mode
 
@@ -83,14 +83,14 @@ This module uses the Sony Visca protocol to control Lumens cameras.
 - WB Blue GAIN Up : Enabled at WB Manual mode
 - WB Blue GAIN Down : Enabled at WB Manual mode
 
-##### === Image ===
+##### === Image [VC-TR1 is NOT supported]===
 
-- Image Mode - Default
-- Image Mode - Custom
+- Image Mode - Default, [VC-TR1 is NOT supported]
+- Image Mode - Custom, [VC-TR1 is NOT supported]
 - Bright Up : Enabled at Custom mode
 - Bright Down : Enabled at Custom mode
-- Sharpness Up
-- Sharpness Down
+- Sharpness Up, [VC-TR1 is NOT supported]
+- Sharpness Down, [VC-TR1 is NOT supported]
 
 ##### === Save / Recall Preset ===
 
@@ -105,3 +105,8 @@ This module uses the Sony Visca protocol to control Lumens cameras.
 - Flip Off
 - Mirror + Flip On : [VC-A50P is NOT supported]
 - Mirror + Flip Off : [VC-A50P is NOT supported]
+
+##### === Auto-Tracking ===
+
+- Auto-Tracking On : [VC-TR1 only]
+- Auto-Tracking Off : [VC-TR1 only]
