@@ -83,21 +83,21 @@ This module uses the Sony Visca protocol to control Lumens cameras.
 - WB Blue GAIN Up : Enabled at WB Manual mode
 - WB Blue GAIN Down : Enabled at WB Manual mode
 
-##### === Image [VC-TR1 is NOT supported]===
+##### === Image === [VC-TR1 is NOT supported]
 
-- Image Mode - Default, [VC-TR1 is NOT supported]
-- Image Mode - Custom, [VC-TR1 is NOT supported]
+- Image Mode - Default
+- Image Mode - Custom
 - Bright Up : Enabled at Custom mode
 - Bright Down : Enabled at Custom mode
-- Sharpness Up, [VC-TR1 is NOT supported]
-- Sharpness Down, [VC-TR1 is NOT supported]
+- Sharpness Up
+- Sharpness Down
 
 ##### === Save / Recall Preset ===
 
 - Save Preset : id = 0~127
 - Recall Preset : id = 0~127
 
-##### === Digital-Effect ===
+##### === Digital-Effect === [VC-TR1 is NOT supported]
 
 - Mirror On
 - Mirror Off
