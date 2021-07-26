@@ -13,3 +13,9 @@ See HELP.md and LICENSE
 
 **V1.0.1**
 -added to support "VC-TR1" Camera.
+
+**V1.0.2**
+-change the product catalog as (product group)
+"PTZ Camera",
+"Box Camera",
+"Tracking Camera"

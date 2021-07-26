@@ -472,13 +472,14 @@ instance.prototype.config_fields = function () {
 			value: `
 				<div class="alert alert-danger">
 					<h3>Lumens : 「We Make Your Job Easier」 !</h3>
-						This module controls LUMENS ${self.config.product} cameras with VISCA over IP protocol
+						This module controls LUMENS cameras with VISCA over IP protocol.
 						<br>
-						For more information about Lumens Camera, please refer ... 
+						For more details about Lumens Camera, please refer to... 
 						<br>
 						<a href="https://www.mylumens.com/en/Products" target="_new" class="btn btn-warning mr-1">Lumens Camera info.</a>				
 					<br><br><br>
-					<h4>Please fill in the IP below</h4>
+					<h4>the product you choose : "${self.config.product}",</h4>
+					<h4>Please fill in the IP below Now </h4>
 				</div>
 			`
 		},
@@ -524,7 +525,7 @@ instance.prototype.init_presets = function () {
 	//=============== Save / Recall	Preset catalog =================
 	var index;
 	for (index = 1; index < 33; index++) {
-		if ((self.config.product !== 'VC-TR1') || ((index !== 1) && (index !== 5) && (index !== 6) && (index !== 7) && (index !== 8))) {
+		if ((self.config.product !== 'Tracking Camera') || ((index !== 1) && (index !== 5) && (index !== 6) && (index !== 7) && (index !== 8))) {
 			presets.push({
 				category: 'Save Preset',
 				label: 'Save Preset ' + parseInt(index),
@@ -600,282 +601,6 @@ instance.prototype.init_presets = function () {
 				}
 			]
 		},
-		//=============== Exposure catalog =================
-		{
-			category: 'Exposure',
-			label: 'Exposure Full Auto',
-			bank: {
-				style: 'text',
-				text: 'Expos.\\nAuto',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-				// latch: true
-			},
-			actions: [
-				{
-					action: 'expModeAuto',
-				}
-			]
-		},
-		{
-			category: 'Exposure',
-			label: 'Exposure Manual',
-			bank: {
-				style: 'text',
-				text: 'Expos.\\nManual',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-				// latch: true
-			},
-			actions: [
-				{
-					action: 'expModeManu',
-				}
-			]
-		},
-		{
-			category: 'Exposure',
-			label: 'Exposure Shutter Priority',
-			bank: {
-				style: 'text',
-				text: 'Shutter\\nPri.',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-				// latch: true
-			},
-			actions: [
-				{
-					action: 'expModeShutterPri',
-				}
-			]
-		},
-		{
-			category: 'Exposure',
-			label: 'Shutter Up',
-			bank: {
-				style: 'text',
-				text: 'Shutter\\nUP',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				// {
-				// 	action: 'expModeManu',
-				// },
-				{
-					action: 'shutU',
-					// delay: '15',
-				}
-			]
-		},
-		{
-			category: 'Exposure',
-			label: 'Shutter Down',
-			bank: {
-				style: 'text',
-				text: 'Shutter\\nDOWN',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				// {
-				// 	action: 'expModeManu',
-				// },
-				{
-					action: 'shutD',
-					// delay: '15',
-				}
-			]
-		},
-
-		//=============== White Balance catalog =================
-		{
-			category: 'White Balance',
-			label: 'White Balance - Auto',
-			bank: {
-				style: 'text',
-				text: 'WB\\nAuto',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'wbModeAuto',
-				}
-			]
-		},
-		{
-			category: 'White Balance',
-			label: 'White Balance - One Push WB',
-			bank: {
-				style: 'text',
-				text: 'One Push\\nWB',
-				size: '14',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'wbModeOnePush',
-				},
-				{
-					action: 'onePushWB',
-					delay: '15',
-				}
-			]
-		},
-		{
-			category: 'White Balance',
-			label: 'White Balance - R Gain Up',
-			bank: {
-				style: 'text',
-				text: 'R Gain\\nUP',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'wbModeManual',
-				},
-				{
-					action: 'wbRGainU',
-					delay: '15',
-				}
-			]
-		},
-		{
-			category: 'White Balance',
-			label: 'White Balance - R Gain Down',
-			bank: {
-				style: 'text',
-				text: 'R Gain\\nDOWN',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'wbModeManual',
-				},
-				{
-					action: 'wbRGainD',
-					delay: '15',
-				}
-			]
-		},
-		{
-			category: 'White Balance',
-			label: 'White Balance - B Gain Up',
-			bank: {
-				style: 'text',
-				text: 'B Gain\\nUP',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'wbModeManual',
-				},
-				{
-					action: 'wbBGainU',
-					delay: '15',
-				}
-			]
-		},
-		{
-			category: 'White Balance',
-			label: 'White Balance - B Gain Down',
-			bank: {
-				style: 'text',
-				text: 'B Gain\\nDOWN',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'wbModeManual',
-				},
-				{
-					action: 'wbBGainD',
-					delay: '15',
-				}
-			]
-		},
-	];
-
-	const System_NotSupportPreset_1 = ((self.config.product !== 'VC-A50P') && (self.config.product !== "VC-TR1")) ? [
-		{
-			category: 'System',
-			label: 'Tally Off',
-			bank: {
-				style: 'text',
-				text: 'Tally\\nOFF',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'tallyLampOff',
-				}
-			]
-		},
-		{
-			category: 'System',
-			label: 'Tally Mode - Red',
-			bank: {
-				style: 'text',
-				text: 'Tally\\nRed ON',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'tallyLampOn',
-				},
-				{
-					action: 'tallyModeRed',
-					delay: '15',
-				}
-			]
-		},
-	] : [];
-
-	const System_NotSupportPreset_2 = ((self.config.product !== 'VC-A50P') && (self.config.product !== "VC-BC301P")
-		&& (self.config.product !== "VC-BC601P/VC-BC701P") && (self.config.product !== "VC-TR1")) ? [
-			{
-				category: 'System',
-				label: 'Tally Mode - Green',
-				bank: {
-					style: 'text',
-					text: 'Tally\\nGreen ON',
-					size: '14',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'tallyLampOn',
-					},
-					{
-						action: 'tallyModeGreen',
-						delay: '15',
-					}
-				]
-			},
-		] : [];
-
-	const Lens_NotSupportPreset = self.config.product !== "VC-BC301P" ? [
 		//=============== Lens catalog =================
 		{
 			category: 'Lens',
@@ -938,7 +663,7 @@ instance.prototype.init_presets = function () {
 				{
 					action: 'focusF',
 					options: { speed: '1' },
-					delay: '15',
+					delay: '50',
 				}
 			],
 			release_actions: [
@@ -964,7 +689,7 @@ instance.prototype.init_presets = function () {
 				{
 					action: 'focusN',
 					options: { speed: '1' },
-					delay: '15',
+					delay: '50',
 				}
 			],
 			release_actions: [
@@ -1005,14 +730,62 @@ instance.prototype.init_presets = function () {
 				},
 				{
 					action: 'focusOpaf',
-					delay: '15',
+					delay: '50',
 				}
 			]
 		},
-	] : [];
-
-	const Exp_NotSupportPreset_1 = self.config.product !== "VC-BC301P" ? [
 		//=============== Exposure catalog =================
+		{
+			category: 'Exposure',
+			label: 'Exposure Full Auto',
+			bank: {
+				style: 'text',
+				text: 'Expos.\\nAuto',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+				// latch: true
+			},
+			actions: [
+				{
+					action: 'expModeAuto',
+				}
+			]
+		},
+		{
+			category: 'Exposure',
+			label: 'Exposure Manual',
+			bank: {
+				style: 'text',
+				text: 'Expos.\\nManual',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+				// latch: true
+			},
+			actions: [
+				{
+					action: 'expModeManu',
+				}
+			]
+		},
+		{
+			category: 'Exposure',
+			label: 'Exposure Shutter Priority',
+			bank: {
+				style: 'text',
+				text: 'Shutter\\nPri.',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+				// latch: true
+			},
+			actions: [
+				{
+					action: 'expModeShutterPri',
+				}
+			]
+		},
 		{
 			category: 'Exposure',
 			label: 'Exposure Iris Priority',
@@ -1026,6 +799,46 @@ instance.prototype.init_presets = function () {
 			actions: [
 				{
 					action: 'expModeIrisPri',
+				}
+			]
+		},
+		{
+			category: 'Exposure',
+			label: 'Shutter Up',
+			bank: {
+				style: 'text',
+				text: 'Shutter\\nUP',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				// {
+				// 	action: 'expModeManu',
+				// },
+				{
+					action: 'shutU',
+					// delay: '50',
+				}
+			]
+		},
+		{
+			category: 'Exposure',
+			label: 'Shutter Down',
+			bank: {
+				style: 'text',
+				text: 'Shutter\\nDOWN',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				// {
+				// 	action: 'expModeManu',
+				// },
+				{
+					action: 'shutD',
+					// delay: '50',
 				}
 			]
 		},
@@ -1045,7 +858,7 @@ instance.prototype.init_presets = function () {
 				// },
 				{
 					action: 'irisU',
-					// 	delay: '15',
+					// 	delay: '50',
 				}
 			]
 		},
@@ -1065,13 +878,192 @@ instance.prototype.init_presets = function () {
 				// },
 				{
 					action: 'irisD',
-					// 	delay: '15',
+					// 	delay: '50',
+				}
+			]
+		},
+		//=============== White Balance catalog =================
+		{
+			category: 'White Balance',
+			label: 'White Balance - Auto',
+			bank: {
+				style: 'text',
+				text: 'WB\\nAuto',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'wbModeAuto',
+				}
+			]
+		},
+		{
+			category: 'White Balance',
+			label: 'White Balance - One Push WB',
+			bank: {
+				style: 'text',
+				text: 'One Push\\nWB',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'wbModeOnePush',
+				},
+				{
+					action: 'onePushWB',
+					delay: '50',
+				}
+			]
+		},
+		{
+			category: 'White Balance',
+			label: 'White Balance - R Gain Up',
+			bank: {
+				style: 'text',
+				text: 'R Gain\\nUP',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'wbModeManual',
+				},
+				{
+					action: 'wbRGainU',
+					delay: '50',
+				}
+			]
+		},
+		{
+			category: 'White Balance',
+			label: 'White Balance - R Gain Down',
+			bank: {
+				style: 'text',
+				text: 'R Gain\\nDOWN',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'wbModeManual',
+				},
+				{
+					action: 'wbRGainD',
+					delay: '50',
+				}
+			]
+		},
+		{
+			category: 'White Balance',
+			label: 'White Balance - B Gain Up',
+			bank: {
+				style: 'text',
+				text: 'B Gain\\nUP',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'wbModeManual',
+				},
+				{
+					action: 'wbBGainU',
+					delay: '50',
+				}
+			]
+		},
+		{
+			category: 'White Balance',
+			label: 'White Balance - B Gain Down',
+			bank: {
+				style: 'text',
+				text: 'B Gain\\nDOWN',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'wbModeManual',
+				},
+				{
+					action: 'wbBGainD',
+					delay: '50',
+				}
+			]
+		},
+	];
+
+	const System_NotSupportPreset_1 = (self.config.product !== "Tracking Camera") ? [
+		{
+			category: 'System',
+			label: 'Tally Off',
+			bank: {
+				style: 'text',
+				text: 'Tally\\nOFF',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'tallyLampOff',
+				}
+			]
+		},
+		{
+			category: 'System',
+			label: 'Tally Mode - Red',
+			bank: {
+				style: 'text',
+				text: 'Tally\\nRed ON',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'tallyLampOn',
+				},
+				{
+					action: 'tallyModeRed',
+					delay: '50',
 				}
 			]
 		},
 	] : [];
 
-	const Exp_NotSupportPreset_2 = self.config.product !== "VC-TR1" ? [
+	const System_NotSupportPreset_2 = ((self.config.product !== "Box Camera") && (self.config.product !== "Tracking Camera")) ? [
+		{
+			category: 'System',
+			label: 'Tally Mode - Green',
+			bank: {
+				style: 'text',
+				text: 'Tally\\nGreen ON',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'tallyLampOn',
+				},
+				{
+					action: 'tallyModeGreen',
+					delay: '50',
+				}
+			]
+		},
+	] : [];
+
+	const Exp_NotSupportPreset = self.config.product !== "Tracking Camera" ? [
 		//=============== Exposure catalog =================
 		{
 			category: 'Exposure',
@@ -1089,7 +1081,7 @@ instance.prototype.init_presets = function () {
 				},
 				{
 					action: 'gainU',
-					delay: '15',
+					delay: '50',
 				}
 			]
 		},
@@ -1109,13 +1101,13 @@ instance.prototype.init_presets = function () {
 				},
 				{
 					action: 'gainD',
-					delay: '15',
+					delay: '50',
 				}
 			]
 		},
 	] : [];
 
-	const PT_NotSupportPreset = ((self.config.product !== "VC-BC301P") && (self.config.product !== "VC-BC601P/VC-BC701P")) ? [
+	const PT_NotSupportPreset = (self.config.product !== "Box Camera") ? [
 		//=============== Pan/Tilt Catalog =================
 		{
 			category: 'Pan/Tilt',
@@ -1327,8 +1319,24 @@ instance.prototype.init_presets = function () {
 		},
 	] : [];
 
-	const Image_NotSupportPreset = self.config.product !== 'VC-TR1' ? [
+	const Image_NotSupportPreset = self.config.product !== 'Tracking Camera' ? [
 		//=============== Image catalog =================
+		{
+			category: 'Image',
+			label: 'Image Mode - Default',
+			bank: {
+				style: 'text',
+				text: 'Default\\nImage',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'imageModeDefault',
+				}
+			]
+		},
 		{
 			category: 'Image',
 			label: 'Brightness Up',
@@ -1345,7 +1353,7 @@ instance.prototype.init_presets = function () {
 				},
 				{
 					action: 'brightU',
-					delay: '15',
+					delay: '50',
 				}
 			]
 		},
@@ -1365,23 +1373,7 @@ instance.prototype.init_presets = function () {
 				},
 				{
 					action: 'brightD',
-					delay: '15',
-				}
-			]
-		},
-		{
-			category: 'Image',
-			label: 'Image Mode - Default',
-			bank: {
-				style: 'text',
-				text: 'Default\\nImage',
-				size: '18',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'imageModeDefault',
+					delay: '50',
 				}
 			]
 		},
@@ -1419,43 +1411,7 @@ instance.prototype.init_presets = function () {
 		},
 	] : [];
 
-	const DigEffect_NotSupportPreset_1 = ((self.config.product !== 'VC-A50P') && (self.config.product !== 'VC-TR1')) ? [
-		{
-			category: 'Dig-Effect',
-			label: 'Mirror+Flip On',
-			bank: {
-				style: 'text',
-				text: 'MIRROR\\nFLIP\\nON',
-				size: '14',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'mirrorFlipOn',
-				}
-			]
-		},
-		{
-			category: 'Dig-Effect',
-			label: 'Mirror+Flip Off',
-			bank: {
-				style: 'text',
-				text: 'MIRROR\\nFLIP\\nOFF',
-				size: '14',
-				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
-			},
-			actions: [
-				{
-					action: 'mirrorFlipOff',
-				}
-			]
-		},
-	] : [];
-
-	const DigEffect_NotSupportPreset_2 = (self.config.product !== 'VC-TR1') ? [
-		//=============== Dig-Effect catalog =================
+	const DigEffect_NotSupportPreset = (self.config.product !== 'Tracking Camera') ? [
 		{
 			category: 'Dig-Effect',
 			label: 'Mirror On',
@@ -1520,9 +1476,41 @@ instance.prototype.init_presets = function () {
 				}
 			]
 		},
+		{
+			category: 'Dig-Effect',
+			label: 'Mirror+Flip On',
+			bank: {
+				style: 'text',
+				text: 'MIRROR\\nFLIP\\nON',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'mirrorFlipOn',
+				}
+			]
+		},
+		{
+			category: 'Dig-Effect',
+			label: 'Mirror+Flip Off',
+			bank: {
+				style: 'text',
+				text: 'MIRROR\\nFLIP\\nOFF',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'mirrorFlipOff',
+				}
+			]
+		},
 	] : [];
 
-	const AutoTracking_NotSupportPreset = (self.config.product !== 'VC-TR1') ? [] : [
+	const AutoTracking_NotSupportPreset = ((self.config.product !== 'PTZ Camera') && (self.config.product !== 'Box Camera')) ? [
 		//=============== Auto-Tracking catalog =================
 		{
 			category: 'Auto Tracking',
@@ -1556,19 +1544,16 @@ instance.prototype.init_presets = function () {
 				}
 			]
 		},
-	];
+	] : [];
 
 
 	Array.prototype.push.apply(presets, presets_default);
 	Array.prototype.push.apply(presets, System_NotSupportPreset_1);
 	Array.prototype.push.apply(presets, System_NotSupportPreset_2);
-	Array.prototype.push.apply(presets, Lens_NotSupportPreset);
-	Array.prototype.push.apply(presets, Exp_NotSupportPreset_1);
-	Array.prototype.push.apply(presets, Exp_NotSupportPreset_2);
+	Array.prototype.push.apply(presets, Exp_NotSupportPreset);
 	Array.prototype.push.apply(presets, PT_NotSupportPreset);
 	Array.prototype.push.apply(presets, Image_NotSupportPreset);
-	Array.prototype.push.apply(presets, DigEffect_NotSupportPreset_1);
-	Array.prototype.push.apply(presets, DigEffect_NotSupportPreset_2);
+	Array.prototype.push.apply(presets, DigEffect_NotSupportPreset);
 	Array.prototype.push.apply(presets, AutoTracking_NotSupportPreset);
 
 	self.setPresetDefinitions(presets);
@@ -1577,14 +1562,16 @@ instance.prototype.init_presets = function () {
 instance.prototype.actions = function (system) {
 	var self = this;
 
-	const System_NotSupportActions_1 = (
-		(self.config.product !== 'VC-A50P') && (self.config.product !== 'VC-TR1') && (self.config.product !== "VC-BC301P") && (self.config.product !== "VC-BC601P/VC-BC701P")) ? {
-			'tallyModeGreen': { label: 'Tally Mode - Green' },
-			'tallyModeYellow': { label: 'Tally Mode - Yellow' },
-		} : {}
-
-	const System_NotSupportActions_2 = ((self.config.product !== 'VC-A50P') && (self.config.product !== 'VC-TR1')) ? {
+	const System_NotSupportActions_1 = (self.config.product !== 'Tracking Camera') ? {
 		'tallyModeRed': { label: 'Tally Mode - Red' },
+	} : {}
+
+	const System_NotSupportActions_2 = ((self.config.product !== 'Box Camera') && (self.config.product !== 'Tracking Camera')) ? {
+		'tallyModeGreen': { label: 'Tally Mode - Green' },
+		'tallyModeYellow': { label: 'Tally Mode - Yellow' },
+	} : {}
+
+	const System_NotSupportActions_3 = (self.config.product !== 'Tracking Camera') ? {
 		'tallyLampOn': { label: 'Tally Lamp On' },
 		'tallyLampOff': { label: 'Tally Lamp Off' },
 	} : {}
@@ -1608,21 +1595,20 @@ instance.prototype.actions = function (system) {
 		]
 	}
 
-	const PT_NotSupportActions = (
-		(self.config.product !== "VC-BC301P") && (self.config.product !== "VC-BC601P/VC-BC701P")) ? {
-			//=============== Pan/Tilt Catalog =================
-			'up': { label: 'Tilt Up', ...PToptions },
-			'down': { label: 'Tilt Down', ...PToptions },
-			'left': { label: 'Pan Left', ...PToptions },
-			'right': { label: 'Pan Right', ...PToptions },
-			'upLeft': { label: 'Pan-Tilt_UpLeft', ...PToptions },
-			'upRight': { label: 'Pan-Tilt_UpRight', ...PToptions },
-			'downLeft': { label: 'Pan-Tilt_DownLeft', ...PToptions },
-			'downRight': { label: 'Pan-Tilt_DownRight', ...PToptions },
-			'stop': { label: 'Pan-Tilt_Stop', },
-			'home': { label: 'Pan-Tilt_Home' },
-			'reset': { label: 'Pan-Tilt_Reset' },
-		} : {}
+	const PT_NotSupportActions = (self.config.product !== "Box Camera") ? {
+		//=============== Pan/Tilt Catalog =================
+		'up': { label: 'Tilt Up', ...PToptions },
+		'down': { label: 'Tilt Down', ...PToptions },
+		'left': { label: 'Pan Left', ...PToptions },
+		'right': { label: 'Pan Right', ...PToptions },
+		'upLeft': { label: 'Pan-Tilt_UpLeft', ...PToptions },
+		'upRight': { label: 'Pan-Tilt_UpRight', ...PToptions },
+		'downLeft': { label: 'Pan-Tilt_DownLeft', ...PToptions },
+		'downRight': { label: 'Pan-Tilt_DownRight', ...PToptions },
+		'stop': { label: 'Pan-Tilt_Stop', },
+		'home': { label: 'Pan-Tilt_Home' },
+		'reset': { label: 'Pan-Tilt_Reset' },
+	} : {}
 
 
 	const zoomFocusOptions = {
@@ -1637,27 +1623,8 @@ instance.prototype.actions = function (system) {
 		]
 	}
 
-	const Lens_NotSupportActions = (self.config.product !== "VC-BC301P") ? {
-		//=============== Lens catalog =================
-		'zoomS': { label: 'Zoom Stop' },
-		'zoomI': { label: 'Zoom In', ...zoomFocusOptions },
-		'zoomO': { label: 'Zoom Out', ...zoomFocusOptions },
-		'focusS': { label: 'Focus Stop' },
-		'focusN': { label: 'Focus Near', ...zoomFocusOptions },
-		'focusF': { label: 'Focus Far', ...zoomFocusOptions },
-		'focusM_AF': { label: 'Auto Focus Mode' },
-		'focusM_MF': { label: 'Manual Focus Mode' },
-		'focusOpaf': { label: 'One Push Auto Focus' },
-	} : {}
 
-	const Exp_NotSupportActions_1 = (self.config.product !== "VC-BC301P") ? {
-		//=============== Exposure catalog =================
-		'expModeIrisPri': { label: 'Exposure Mode - Iris Priority' },
-		'irisU': { label: 'Iris Up' },
-		'irisD': { label: 'Iris Down' },
-	} : {}
-
-	const Exp_NotSupportActions_2 = (self.config.product !== "VC-TR1") ? {
+	const Exp_NotSupportActions = (self.config.product !== "Tracking Camera") ? {
 		//=============== Exposure catalog =================
 		'gainU': { label: 'Gain Up' },
 		'gainD': { label: 'Gain Down' },
@@ -1665,35 +1632,32 @@ instance.prototype.actions = function (system) {
 		'expCompOff': { label: 'Exposure Compensation Off' },
 	} : {}
 
-	const Image_NotSupportActions = (self.config.product !== "VC-TR1") ? {
+	const Image_NotSupportActions = (self.config.product !== "Tracking Camera") ? {
 		//=============== Image catalog =================
 		'imageModeDefault': { label: 'Image Mode - Default' },
 		'imageModeCustom': { label: 'Image Mode - Custom' },
-		'sharpU': { label: 'Sharpness Up' },
-		'sharpD': { label: 'Sharpness Down' },
 		'brightU': { label: 'Bright Up' },
 		'brightD': { label: 'Bright Down' },
+		'sharpU': { label: 'Sharpness Up' },
+		'sharpD': { label: 'Sharpness Down' },
 	} : {}
 
-	const DigEffect_NotSupportActions_1 = (self.config.product !== 'VC-TR1') ? {
+	const DigEffect_NotSupportActions = (self.config.product !== 'Tracking Camera') ? {
 		//=============== Dig-Effect catalog =================
 		'mirrorOn': { label: 'Mirror On' },
 		'mirrorOff': { label: 'Mirror Off' },
 		'flipOn': { label: 'Flip On' },
 		'flipOff': { label: 'Flip Off' },
-	} : {}
-
-	const DigEffect_NotSupportActions_2 = ((self.config.product !== 'VC-A50P') && (self.config.product !== 'VC-TR1')) ? {
 		'mirrorFlipOn': { label: 'Mirror + Flip On' },
 		'mirrorFlipOff': { label: 'Mirror + Flip Off' },
 	} : {}
 
-	const AutoTracking_NotSupportActions = (self.config.product !== 'VC-TR1') ? {} : {
+	const AutoTracking_NotSupportActions = ((self.config.product !== 'Box Camera') && (self.config.product !== 'PTZ Camera')) ? {
 		'autoTrackingOn': { label: 'Auto Tracking On' },
 		'autoTrackingOff': { label: 'Auto Tracking Off' },
-	}
+	} : {}
 
-	const Preset_SupportActions = (self.config.product !== 'VC-TR1') ? {
+	const Preset_SupportActions = (self.config.product !== 'Tracking Camera') ? {
 		//=============== Save / Recall	Preset catalog =================
 		'savePset': {
 			label: 'Save Preset',
@@ -1744,8 +1708,6 @@ instance.prototype.actions = function (system) {
 
 	const btnActions = {
 		//=============== System catalog =================
-		...System_NotSupportActions_1,
-		...System_NotSupportActions_2,
 		'powerOn': { label: 'Power On' },
 		'powerOff': { label: 'Power Off' },
 		'menuOnOff': { label: 'Menu On/Off Toggle' },
@@ -1754,25 +1716,38 @@ instance.prototype.actions = function (system) {
 		'menuDown': { label: 'Menu Down' },
 		'menuLeft': { label: 'Menu Left' },
 		'menuRight': { label: 'Menu Right' },
+		...System_NotSupportActions_1,
+		...System_NotSupportActions_2,
+		...System_NotSupportActions_3,
 
 		//=============== Pan/Tilt Catalog =================
 		...PT_NotSupportActions,
 
 		//=============== Lens catalog =================
-		...Lens_NotSupportActions,
+		'zoomS': { label: 'Zoom Stop' },
+		'zoomI': { label: 'Zoom In', ...zoomFocusOptions },
+		'zoomO': { label: 'Zoom Out', ...zoomFocusOptions },
+		'focusS': { label: 'Focus Stop' },
+		'focusF': { label: 'Focus Far', ...zoomFocusOptions },
+		'focusN': { label: 'Focus Near', ...zoomFocusOptions },
+		'focusM_AF': { label: 'Auto Focus Mode' },
+		'focusM_MF': { label: 'Manual Focus Mode' },
+		'focusOpaf': { label: 'One Push Auto Focus' },
 
 		//=============== Exposure catalog =================
 		'expModeAuto': { label: 'Exposure Mode - Auto' },
 		'expModeManu': { label: 'Exposure Mode - Manual' },
 		'expModeShutterPri': { label: 'Exposure Mode - Shutter Priority' },
+		'expModeIrisPri': { label: 'Exposure Mode - Iris Priority' },
 		'shutU': { label: 'Shutter Up' },
 		'shutD': { label: 'Shutter Down' },
+		'irisU': { label: 'Iris Up' },
+		'irisD': { label: 'Iris Down' },
+		...Exp_NotSupportActions,
 		'expCompUp': { label: 'Exposure Compensation Up' },
 		'expCompDown': { label: 'Exposure Compensation Down' },
 		'backLightOn': { label: 'BackLight On' },
 		'backLightOff': { label: 'BackLight Off' },
-		...Exp_NotSupportActions_1,
-		...Exp_NotSupportActions_2,
 
 		//=============== White Balance catalog =================
 		'wbModeAuto': { label: 'White Balance Mode - Auto' },
@@ -1791,8 +1766,7 @@ instance.prototype.actions = function (system) {
 		...Preset_SupportActions,
 
 		//=============== Dig-Effect catalog =================
-		...DigEffect_NotSupportActions_1,
-		...DigEffect_NotSupportActions_2,
+		...DigEffect_NotSupportActions,
 
 		//=============== Auto-Tracking catalog ===============
 		...AutoTracking_NotSupportActions
