@@ -9,6 +9,15 @@ This module uses the Sony Visca protocol to control Lumens cameras.
 - Type in the port of the device (default is 52381).
 - You can also specify the Camera ID. (default is "id 1")
 
+### More Detailed Information
+
+Lumens prepares a more detailed operation document for you.  
+You also can find the available actions for different product model.  
+In detail, Please refer to the following link :  
+https://www.lumens.com.tw/en/Downloads_Search?id=0&keyword=Companion&keyword2=  
+or you can visit https://www.lumens.com.tw/en/Download  
+then search "companion"
+
 ### Available Actions
 
 ##### === System ===
@@ -21,13 +30,13 @@ This module uses the Sony Visca protocol to control Lumens cameras.
 - Menu Down
 - Menu Left
 - Menu Right
-- Tally Lamp On, [VC-A50P & VC-TR1 are NOT supported]
-- Tally Lamp Off, [VC-A50P & VC-TR1 are NOT supported]
-- Tally Mode - Red : Enabled at Tally Lamp On mode, [VC-A50P & VC-TR1 are NOT supported]
-- Tally Mode - Green : Enabled at Tally Lamp On mode, [VC-A50P & VC-TR1 & VC-BC series are NOT supported]
-- Tally Mode - Yellow : Enabled at Tally Lamp On mode, [VC-A50P & VC-TR1 & VC-BC series are NOT supported]
+- Tally Lamp On
+- Tally Lamp Off
+- Tally Mode - Red : Enabled at Tally Lamp On mode
+- Tally Mode - Green : Enabled at Tally Lamp On mode
+- Tally Mode - Yellow : Enabled at Tally Lamp On mode
 
-##### === Pan/Tilt === [VC-BC Series are NOT supported]
+##### === Pan/Tilt ===
 
 - Tilt Up : speed 1 (low speed) to 24 (high speed)
 - Tilt Down : speed 1 (low speed) to 24 (high speed)
@@ -41,7 +50,7 @@ This module uses the Sony Visca protocol to control Lumens cameras.
 - Pan-Tilt_Home : lens goes to HOME position
 - Pan-Tilt_Reset : lens does position initialization and then goes to last position
 
-##### === Lens === [VC-BC301P is NOT supported]
+##### === Lens ===
 
 - Zoom Stop
 - Zoom In : speed : p=0 (Low) to 7 (High)
@@ -58,17 +67,17 @@ This module uses the Sony Visca protocol to control Lumens cameras.
 - Exposure Mode - Auto
 - Exposure Mode - Manual
 - Exposure Mode - Shutter Priority
-- Exposure Mode - Iris Priority, [VC-BC301P is NOT supported]
-- Iris Up: Enabled at Iris Priority or Manual Mode, [VC-BC301P is NOT supported]
-- Iris Down: Enabled at Iris Priority or Manual Mode, [VC-BC301P is NOT supported]
+- Exposure Mode - Iris Priority
+- Iris Up: Enabled at Iris Priority or Manual Mode
+- Iris Down: Enabled at Iris Priority or Manual Mode
 - Shutter Up : Enabled at AE Shutter Priority or Manual Mode
 - Shutter Down : Enabled at AE Shutter Priority or Manual Mode
-- Gain Up : Enabled at AE Manual Mode, [VC-TR1 is NOT supported]
-- Gain Down : Enabled at AE Manual Mode, [VC-TR1 is NOT supported]
-- Exposure Compensation On, [VC-TR1 is NOT supported]
-- Exposure Compensation Off, [VC-TR1 is NOT supported]
-- Exposure Compensation Up : Enabled at Exposure Compensation On mode (VC-TR1 is always enabled Compensation On mode)
-- Exposure Compensation Down : Enabled at Exposure Compensation On mode(VC-TR1 is always enabled Compensation On mode)
+- Gain Up : Enabled at AE Manual Mode
+- Gain Down : Enabled at AE Manual Mode
+- Exposure Compensation On
+- Exposure Compensation Off
+- Exposure Compensation Up : Enabled at Exposure Compensation On mode
+- Exposure Compensation Down : Enabled at Exposure Compensation On mode
 - BackLight On : Enabled at AE Full Auto Mode
 - BackLight Off : Enabled at AE Full Auto Mode
 
@@ -83,7 +92,7 @@ This module uses the Sony Visca protocol to control Lumens cameras.
 - WB Blue GAIN Up : Enabled at WB Manual mode
 - WB Blue GAIN Down : Enabled at WB Manual mode
 
-##### === Image === [VC-TR1 is NOT supported]
+##### === Image ===
 
 - Image Mode - Default
 - Image Mode - Custom
@@ -97,16 +106,16 @@ This module uses the Sony Visca protocol to control Lumens cameras.
 - Save Preset : id = 0~127
 - Recall Preset : id = 0~127
 
-##### === Digital-Effect === [VC-TR1 is NOT supported]
+##### === Digital-Effect ===
 
 - Mirror On
 - Mirror Off
 - Flip On
 - Flip Off
-- Mirror + Flip On : [VC-A50P is NOT supported]
-- Mirror + Flip Off : [VC-A50P is NOT supported]
+- Mirror + Flip On
+- Mirror + Flip Off
 
 ##### === Auto-Tracking ===
 
-- Auto-Tracking On : [VC-TR1 only]
-- Auto-Tracking Off : [VC-TR1 only]
+- Auto-Tracking On
+- Auto-Tracking Off

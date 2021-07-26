@@ -1,19 +1,16 @@
 {
   "name": "lumens-visca",
-  "version": "1.0.1",
-  "api_version": "1.0.1",
+  "version": "1.0.2",
+  "api_version": "1.0.2",
   "keywords": [
     "Camera",
     "Lumens"
   ],
   "manufacturer": "Lumens",
   "product": [
-    "VC-A50P",
-    "VC-A61P",
-    "VC-A71P",
-    "VC-BC301P",
-    "VC-BC601P/VC-BC701P",
-    "VC-TR1"
+    "PTZ Camera",
+    "Box Camera",
+    "Tracking Camera"
   ],
   "shortname": "Camera",
   "description": "Module to control LUMENS cameras with Sony Visca protocol over IP",
