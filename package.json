@@ -1,23 +1,31 @@
 {
-  "name": "lumens-visca",
-  "version": "1.0.3",
-  "api_version": "1.0.2",
-  "keywords": [
-    "Camera",
-    "Lumens"
-  ],
-  "manufacturer": "Lumens",
-  "product": [
-    "PTZ Camera",
-    "Box Camera",
-    "Tracking Camera"
-  ],
-  "shortname": "Camera",
-  "description": "Module to control LUMENS cameras with Sony Visca protocol over IP",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Lumens Team",
-  "license": "MIT"
+	"name": "lumens-visca",
+	"version": "1.0.3",
+	"api_version": "1.0.0",
+	"keywords": [
+		"Camera",
+		"Lumens"
+	],
+	"manufacturer": "Lumens",
+	"product": [
+		"PTZ Camera",
+		"Box Camera",
+		"Tracking Camera"
+	],
+	"shortname": "Camera",
+	"description": "Module to control LUMENS cameras with Sony Visca protocol over IP",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Lumens Team",
+	"license": "MIT",
+	"homepage": "https://github.com/bitfocus/companion-module-lumens-visca#readme",
+	"bugs": {
+		"url": "https://github.com/bitfocus/companion-module-lumens-visca/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bitfocus/companion-module-lumens-visca.git"
+	}
 }
