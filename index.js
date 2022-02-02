@@ -1836,7 +1836,7 @@ instance.prototype.actions = function (system) {
 		//=============== Auto-Tracking catalog ===============
 		...AutoTracking_NotSupportActions,
 	}
-	self.system.emit('instance_actions', self.id, btnActions)
+	self.setActions(btnActions)
 }
 
 instance.prototype.action = function (action) {
