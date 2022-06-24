@@ -1,7 +1,7 @@
-var instance_skel = require('../../instance_skel')
-var udp = require('../../udp')
-var debug
-var log
+var instance_skel = require('../../instance_skel');
+var udp = require('../../udp');
+var debug;
+var log;
 
 var PRESET = [
 	{ id: '0', label: 'Preset 0' },
@@ -132,7 +132,7 @@ var PRESET = [
 	{ id: '7D', label: 'Preset 125' },
 	{ id: '7E', label: 'Preset 126' },
 	{ id: '7F', label: 'Preset 127' },
-]
+];
 var PRESET_TR1 = [
 	// { id: '0', label: 'Preset 0' },
 	// { id: '1', label: 'Preset 1' },
@@ -262,7 +262,7 @@ var PRESET_TR1 = [
 	{ id: '7D', label: 'Preset 125' },
 	{ id: '7E', label: 'Preset 126' },
 	{ id: '7F', label: 'Preset 127' },
-]
+];
 var SPEED = [
 	{ id: '18', label: 'Speed 24 (Fast)' },
 	{ id: '17', label: 'Speed 23' },
@@ -287,8 +287,8 @@ var SPEED = [
 	{ id: '4', label: 'Speed 04' },
 	{ id: '3', label: 'Speed 03' },
 	{ id: '2', label: 'Speed 02' },
-	{ id: '1', label: 'Speed 01 (Slow)' },
-]
+	{ id: '1', label: 'Speed 01 (Slow)' }
+];
 
 var ZOOM_FOCUS_SPEED = [
 	{ id: '7', label: 'Speed 07 (Fast)' },
@@ -297,188 +297,171 @@ var ZOOM_FOCUS_SPEED = [
 	{ id: '4', label: 'Speed 04' },
 	{ id: '3', label: 'Speed 03' },
 	{ id: '2', label: 'Speed 02' },
-	{ id: '1', label: 'Speed 01 (Slow)' },
-]
+	{ id: '1', label: 'Speed 01 (Slow)' }
+];
 
 var CAMERAID = [
 	//	{ id: '128', label: 'id 0' },
-	{ id: '129', label: 'id 1' }, //129 = 0x81
+	{ id: '129', label: 'id 1' },  //129 = 0x81
 	{ id: '130', label: 'id 2' },
 	{ id: '131', label: 'id 3' },
 	{ id: '132', label: 'id 4' },
 	{ id: '133', label: 'id 5' },
 	{ id: '134', label: 'id 6' },
 	{ id: '135', label: 'id 7' },
-	{ id: '136', label: 'id 8' },
-]
+	{ id: '136', label: 'id 8' }
+];
 
 instance.prototype.sendVISCACommand = function (payload) {
-	var self = this
-	var buf = new Buffer(32)
+	var self = this;
+	var buf = new Buffer(32);
 
 	// 0x01 0x00 = VISCA Command
-	buf[0] = 0x01
-	buf[1] = 0x00
+	buf[0] = 0x01;
+	buf[1] = 0x00;
 
-	self.packet_counter = (self.packet_counter + 1) % 0xffffffff
+	self.packet_counter = (self.packet_counter + 1) % 0xFFFFFFFF;
 
-	buf.writeUInt16BE(payload.length, 2)
-	buf.writeUInt32BE(self.packet_counter, 4)
+	buf.writeUInt16BE(payload.length, 2);
+	buf.writeUInt32BE(self.packet_counter, 4);
 
 	if (typeof payload == 'string') {
-		buf.write(payload, 8, 'binary')
+		buf.write(payload, 8, 'binary');
 	} else if (typeof payload == 'object' && payload instanceof Buffer) {
-		payload.copy(buf, 8)
+		payload.copy(buf, 8);
 	}
 
-	var newbuf = buf.slice(0, 8 + payload.length)
+	var newbuf = buf.slice(0, 8 + payload.length);
 
 	try {
-		debug('sending', newbuf, 'to', self.udp.host)
-		self.udp.send(newbuf)
-		console.log(
-			'\x1b[36m',
-			("====> To '" + self.config.label + "': ").padStart(25, ' '),
-			newbuf.slice(8, 8 + payload.length),
-			'\x1b[0m'
-		) //shown in cyan
+		debug('sending', newbuf, "to", self.udp.host);
+		self.udp.send(newbuf);
+		console.log('\x1b[36m', ("====> To '" + self.config.label + "': ").padStart(25, ' '), newbuf.slice(8, 8 + payload.length), '\x1b[0m');	//shown in cyan
 
 		if (self.udp.host === '') {
-			var str =
-				'Error : IP Address of Camera "' +
-				self.config.label +
-				'" is blank, please click "EDIT" and fill in the correct IP.'
-			console.log('\x1b[31m', str, '\x1b[0m') //shown in red
-			self.log('error', str)
+			var str = 'Error : IP Address of Camera "' + self.config.label + '" is blank, please click "EDIT" and fill in the correct IP.';
+			console.log('\x1b[31m', str, '\x1b[0m');	//shown in red
+			self.log('error', str);
 		}
 	} catch (error) {
-		console.log('\x1b[31m', 'Error : when sending VISCA command to ', self.config.label, '\x1b[0m') //shown in red
-		console.log(error)
+		console.log('\x1b[31m', 'Error : when sending VISCA command to ', self.config.label, '\x1b[0m');	//shown in red
+		console.log(error);
 	}
-}
+};
 
 instance.prototype.sendControlCommand = function (payload) {
-	var self = this
-	var buf = new Buffer(32)
+	var self = this;
+	var buf = new Buffer(32);
 
 	// 0x01 0x00 = VISCA Command
-	buf[0] = 0x02
-	buf[1] = 0x00
+	buf[0] = 0x02;
+	buf[1] = 0x00;
 
-	self.packet_counter = (self.packet_counter + 1) % 0xffffffff
+	self.packet_counter = (self.packet_counter + 1) % 0xFFFFFFFF;
 
-	buf.writeUInt16BE(payload.length, 2)
-	buf.writeUInt32BE(self.packet_counter, 4)
+	buf.writeUInt16BE(payload.length, 2);
+	buf.writeUInt32BE(self.packet_counter, 4);
 
 	if (typeof payload == 'string') {
-		buf.write(payload, 8, 'binary')
+		buf.write(payload, 8, 'binary');
 	} else if (typeof payload == 'object' && payload instanceof Buffer) {
-		payload.copy(buf, 8)
+		payload.copy(buf, 8);
 	}
 
-	var newbuf = buf.slice(0, 8 + payload.length)
+	var newbuf = buf.slice(0, 8 + payload.length);
 
 	try {
-		debug('sending', newbuf, 'to', self.udp.host)
-		self.udp.send(newbuf)
-		console.log(
-			'\x1b[35m',
-			("====> To '" + self.config.label + "': ").padStart(25, ' '),
-			'Send Control Cmd ',
-			newbuf,
-			'\x1b[0m'
-		)
+		debug('sending', newbuf, "to", self.udp.host);
+		self.udp.send(newbuf);
+		console.log('\x1b[35m', ("====> To '" + self.config.label + "': ").padStart(25, ' '), "Send Control Cmd ", newbuf, '\x1b[0m');
 
 		if (self.udp.host === '') {
-			var str =
-				'Error : IP Address of Camera "' +
-				self.config.label +
-				'" is blank, please click "EDIT" and fill in the correct IP.'
-			console.log('\x1b[31m', str, '\x1b[0m') //shown in red
-			self.log('error', str)
+			var str = 'Error : IP Address of Camera "' + self.config.label + '" is blank, please click "EDIT" and fill in the correct IP.';
+			console.log('\x1b[31m', str, '\x1b[0m');	//shown in red
+			self.log('error', str);
 		}
 	} catch (error) {
-		console.log('\x1b[31m', 'Error : when sending Control command to ', self.config.label, '\x1b[0m') //shown in red
-		console.log(error)
+		console.log('\x1b[31m', 'Error : when sending Control command to ', self.config.label, '\x1b[0m');	//shown in red
+		console.log(error);
 	}
-}
+};
 
 function instance(system, id, config) {
-	var self = this
+	var self = this;
 
 	// super-constructor
-	instance_skel.apply(this, arguments)
+	instance_skel.apply(this, arguments);
 
-	return self
+	return self;
 }
 
 instance.prototype.init_udp = function () {
-	var self = this
+	var self = this;
 
 	if (self.udp !== undefined) {
-		self.udp.destroy()
-		delete self.udp
+		self.udp.destroy();
+		delete self.udp;
 	}
 
 	if (self.config.host !== undefined) {
-		self.udp = new udp(self.config.host, self.config.port)
+		self.udp = new udp(self.config.host, self.config.port);
 
 		// Reset sequence number
-		self.sendControlCommand('\x01')
-		self.packet_counter = 0
+		self.sendControlCommand('\x01');
+		self.packet_counter = 0;
 
 		self.udp.on('status_change', function (status, message) {
-			self.status(status, message)
-		})
+			self.status(status, message);
+		});
 		self.udp.on('data', function (data) {
-			console.log(("    <== From '" + self.config.label + "': ").padStart(25, ' '), data)
-		})
+			console.log(("    <== From '" + self.config.label + "': ").padStart(25, ' '), data);
+		});
 
-		debug(self.udp.host, ':', self.config.port)
+		debug(self.udp.host, ':', self.config.port);
 	}
-}
+};
 
 instance.prototype.init = function (appEnv) {
-	var self = this
+	var self = this;
 
-	debug = self.debug
-	log = self.log
+	debug = self.debug;
+	log = self.log;
 
-	self.appEnv = appEnv || null
-	self.status(self.STATUS_UNKNOWN)
-	self.init_udp()
-	self.actions() // export actions
-	self.init_presets()
+	self.appEnv = appEnv || null;
+	self.status(self.STATUS_UNKNOWN);
+	self.init_udp();
+	self.actions(); // export actions
+	self.init_presets();
 
 	//set device address/id to camera  88 30 0p FF, p = device 1~7
-	cmd = '\x88\x30' + String.fromCharCode(parseInt(self.config.id) - 128) + '\xFF'
-	self.sendVISCACommand(cmd)
-}
+	cmd = '\x88\x30' + String.fromCharCode(parseInt(self.config.id) - 128) + '\xFF';
+	self.sendVISCACommand(cmd);
+};
 
 instance.prototype.updateConfig = function (config) {
-	var self = this
-	self.config = config
-	self.init_presets()
+	var self = this;
+	self.config = config;
+	self.init_presets();
 
 	if (self.udp !== undefined) {
-		self.udp.destroy()
-		delete self.udp
+		self.udp.destroy();
+		delete self.udp;
 	}
 
-	self.status(self.STATUS_UNKNOWN)
+	self.status(self.STATUS_UNKNOWN);
 
 	if (self.config.host !== undefined) {
-		self.udp = new udp(self.config.host, self.config.port)
+		self.udp = new udp(self.config.host, self.config.port);
 
 		self.udp.on('status_change', function (status, message) {
-			self.status(status, message)
-		})
+			self.status(status, message);
+		});
 	}
-}
+};
 
 // Return config fields for web config
 instance.prototype.config_fields = function () {
-	var self = this
+	var self = this;
 
 	return [
 		{
@@ -498,14 +481,14 @@ instance.prototype.config_fields = function () {
 					<h4>the product you choose : "${self.config.product}",</h4>
 					<h4>Please fill in the IP below Now </h4>
 				</div>
-			`,
+			`
 		},
 		{
 			type: 'textinput',
 			id: 'host',
 			label: 'Target IP (for example : 192.168.4.54)',
 			width: 6,
-			regex: self.REGEX_IP,
+			regex: self.REGEX_IP
 		},
 		{
 			type: 'textinput',
@@ -513,7 +496,7 @@ instance.prototype.config_fields = function () {
 			label: 'Target PORT (default : 52381)',
 			width: 6,
 			regex: self.REGEX_PORT,
-			default: '52381',
+			default: '52381'
 		},
 		{
 			type: 'dropdown',
@@ -521,31 +504,28 @@ instance.prototype.config_fields = function () {
 			label: 'LUMENS Camera Address (factory setting : id 1)',
 			width: 6,
 			default: '129',
-			choices: CAMERAID,
-		},
+			choices: CAMERAID
+		}
 	]
-}
+};
 
 // When module gets deleted
 instance.prototype.destroy = function () {
-	var self = this
+	var self = this;
 
 	if (self.udp !== undefined) {
-		self.udp.destroy()
+		self.udp.destroy();
 	}
-	debug('destroy', self.id)
-}
+	debug("destroy", self.id);
+};
 
 instance.prototype.init_presets = function () {
-	var self = this
-	var presets = []
+	var self = this;
+	var presets = [];
 	//=============== Save / Recall	Preset catalog =================
-	var index
+	var index;
 	for (index = 1; index < 33; index++) {
-		if (
-			self.config.product !== 'Tracking Camera' ||
-			(index !== 1 && index !== 5 && index !== 6 && index !== 7 && index !== 8)
-		) {
+		if ((self.config.product !== 'Tracking Camera') || ((index !== 1) && (index !== 5) && (index !== 6) && (index !== 7) && (index !== 8))) {
 			presets.push({
 				category: 'Save Preset',
 				label: 'Save Preset ' + parseInt(index),
@@ -561,10 +541,10 @@ instance.prototype.init_presets = function () {
 						action: 'savePset',
 						options: {
 							val: index.toString(16).toUpperCase(),
-						},
-					},
-				],
-			})
+						}
+					}
+				]
+			});
 			presets.push({
 				category: 'Recall Preset',
 				label: 'Recall Preset ' + parseInt(index),
@@ -580,10 +560,10 @@ instance.prototype.init_presets = function () {
 						action: 'recallPset',
 						options: {
 							val: index.toString(16).toUpperCase(),
-						},
-					},
-				],
-			})
+						}
+					}
+				]
+			});
 		}
 	}
 
@@ -602,8 +582,8 @@ instance.prototype.init_presets = function () {
 			actions: [
 				{
 					action: 'powerOn',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'System',
@@ -618,8 +598,8 @@ instance.prototype.init_presets = function () {
 			actions: [
 				{
 					action: 'powerOff',
-				},
-			],
+				}
+			]
 		},
 		//=============== Lens catalog =================
 		{
@@ -630,19 +610,19 @@ instance.prototype.init_presets = function () {
 				text: 'ZOOM\\nIN',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
 					action: 'zoomI',
 					options: { speed: '3' },
-				},
+				}
 			],
 			release_actions: [
 				{
 					action: 'zoomS',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'Lens',
@@ -652,19 +632,19 @@ instance.prototype.init_presets = function () {
 				text: 'ZOOM\\nOUT',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0, 0, 0),
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
 					action: 'zoomO',
 					options: { speed: '3' },
-				},
+				}
 			],
 			release_actions: [
 				{
 					action: 'zoomS',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'Lens',
@@ -684,13 +664,13 @@ instance.prototype.init_presets = function () {
 					action: 'focusF',
 					options: { speed: '1' },
 					delay: '50',
-				},
+				}
 			],
 			release_actions: [
 				{
 					action: 'focusS',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'Lens',
@@ -710,13 +690,13 @@ instance.prototype.init_presets = function () {
 					action: 'focusN',
 					options: { speed: '1' },
 					delay: '50',
-				},
+				}
 			],
 			release_actions: [
 				{
 					action: 'focusS',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'Lens',
@@ -731,8 +711,8 @@ instance.prototype.init_presets = function () {
 			actions: [
 				{
 					action: 'focusM_AF',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'Lens',
@@ -751,8 +731,8 @@ instance.prototype.init_presets = function () {
 				{
 					action: 'focusOpaf',
 					delay: '50',
-				},
-			],
+				}
+			]
 		},
 		//=============== Exposure catalog =================
 		{
@@ -769,8 +749,8 @@ instance.prototype.init_presets = function () {
 			actions: [
 				{
 					action: 'expModeAuto',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'Exposure',
@@ -786,8 +766,8 @@ instance.prototype.init_presets = function () {
 			actions: [
 				{
 					action: 'expModeManu',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'Exposure',
@@ -803,8 +783,8 @@ instance.prototype.init_presets = function () {
 			actions: [
 				{
 					action: 'expModeShutterPri',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'Exposure',
@@ -819,8 +799,8 @@ instance.prototype.init_presets = function () {
 			actions: [
 				{
 					action: 'expModeIrisPri',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'Exposure',
@@ -839,8 +819,8 @@ instance.prototype.init_presets = function () {
 				{
 					action: 'shutU',
 					// delay: '50',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'Exposure',
@@ -859,8 +839,8 @@ instance.prototype.init_presets = function () {
 				{
 					action: 'shutD',
 					// delay: '50',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'Exposure',
@@ -879,8 +859,8 @@ instance.prototype.init_presets = function () {
 				{
 					action: 'irisU',
 					// 	delay: '50',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'Exposure',
@@ -899,8 +879,48 @@ instance.prototype.init_presets = function () {
 				{
 					action: 'irisD',
 					// 	delay: '50',
+				}
+			]
+		},
+		{
+			category: 'Exposure',
+			label: 'Gain Up',
+			bank: {
+				style: 'text',
+				text: 'GAIN\\nUP',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'expModeManu',
 				},
-			],
+				{
+					action: 'gainU',
+					delay: '50',
+				}
+			]
+		},
+		{
+			category: 'Exposure',
+			label: 'Gain Down',
+			bank: {
+				style: 'text',
+				text: 'GAIN\\nDOWN',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'expModeManu',
+				},
+				{
+					action: 'gainD',
+					delay: '50',
+				}
+			]
 		},
 		//=============== White Balance catalog =================
 		{
@@ -916,8 +936,8 @@ instance.prototype.init_presets = function () {
 			actions: [
 				{
 					action: 'wbModeAuto',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'White Balance',
@@ -936,8 +956,8 @@ instance.prototype.init_presets = function () {
 				{
 					action: 'onePushWB',
 					delay: '50',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'White Balance',
@@ -956,8 +976,8 @@ instance.prototype.init_presets = function () {
 				{
 					action: 'wbRGainU',
 					delay: '50',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'White Balance',
@@ -976,8 +996,8 @@ instance.prototype.init_presets = function () {
 				{
 					action: 'wbRGainD',
 					delay: '50',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'White Balance',
@@ -996,8 +1016,8 @@ instance.prototype.init_presets = function () {
 				{
 					action: 'wbBGainU',
 					delay: '50',
-				},
-			],
+				}
+			]
 		},
 		{
 			category: 'White Balance',
@@ -1016,614 +1036,538 @@ instance.prototype.init_presets = function () {
 				{
 					action: 'wbBGainD',
 					delay: '50',
-				},
-			],
+				}
+			]
 		},
-	]
 
-	const System_NotSupportPreset_1 =
-		self.config.product !== 'Tracking Camera'
-			? [
-					{
-						category: 'System',
-						label: 'Tally Off',
-						bank: {
-							style: 'text',
-							text: 'Tally\\nOFF',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'tallyLampOff',
-							},
-						],
-					},
-					{
-						category: 'System',
-						label: 'Tally Mode - Red',
-						bank: {
-							style: 'text',
-							text: 'Tally\\nRed ON',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'tallyLampOn',
-							},
-							{
-								action: 'tallyModeRed',
-								delay: '50',
-							},
-						],
-					},
-			  ]
-			: []
+		//=============== Image catalog =================
+		{
+			category: 'Image',
+			label: 'Image Mode - Default',
+			bank: {
+				style: 'text',
+				text: 'Default\\nImage',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'imageModeDefault',
+				}
+			]
+		},
+		{
+			category: 'Image',
+			label: 'Brightness Up',
+			bank: {
+				style: 'text',
+				text: 'Brightness\\nUP',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'imageModeCustom',
+				},
+				{
+					action: 'brightU',
+					delay: '50',
+				}
+			]
+		},
+		{
+			category: 'Image',
+			label: 'Brightness Down',
+			bank: {
+				style: 'text',
+				text: 'Brightness\\nDOWN',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'imageModeCustom',
+				},
+				{
+					action: 'brightD',
+					delay: '50',
+				}
+			]
+		},
+		{
+			category: 'Image',
+			label: 'Sharpness Up',
+			bank: {
+				style: 'text',
+				text: 'Sharpness\\nUP',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'sharpU',
+				}
+			]
+		},
+		{
+			category: 'Image',
+			label: 'Sharpness Down',
+			bank: {
+				style: 'text',
+				text: 'Sharpness\\nDOWN',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'sharpD',
+				}
+			]
+		},
+		//=============== Dig-Effect catalog =================
+		{
+			category: 'Dig-Effect',
+			label: 'Mirror On',
+			bank: {
+				style: 'text',
+				text: 'MIRROR\\nON',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'mirrorOn',
+				}
+			]
+		},
+		{
+			category: 'Dig-Effect',
+			label: 'Mirror Off',
+			bank: {
+				style: 'text',
+				text: 'MIRROR\\nOFF',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'mirrorOff',
+				}
+			]
+		},
+		{
+			category: 'Dig-Effect',
+			label: 'Flip On',
+			bank: {
+				style: 'text',
+				text: 'FLIP\\nON',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'flipOn',
+				}
+			]
+		},
+		{
+			category: 'Dig-Effect',
+			label: 'Flip Off',
+			bank: {
+				style: 'text',
+				text: 'FLIP\\nOFF',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'flipOff',
+				}
+			]
+		},
+	];
 
-	const System_NotSupportPreset_2 =
-		self.config.product !== 'Box Camera' && self.config.product !== 'Tracking Camera'
-			? [
-					{
-						category: 'System',
-						label: 'Tally Mode - Green',
-						bank: {
-							style: 'text',
-							text: 'Tally\\nGreen ON',
-							size: '14',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'tallyLampOn',
-							},
-							{
-								action: 'tallyModeGreen',
-								delay: '50',
-							},
-						],
-					},
-			  ]
-			: []
+	const System_NotSupportPreset_1 = (self.config.product !== "Tracking Camera") ? [
+		{
+			category: 'System',
+			label: 'Tally Off',
+			bank: {
+				style: 'text',
+				text: 'Tally\\nOFF',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'tallyLampOff',
+				}
+			]
+		},
+		{
+			category: 'System',
+			label: 'Tally Mode - Red',
+			bank: {
+				style: 'text',
+				text: 'Tally\\nRed ON',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'tallyLampOn',
+				},
+				{
+					action: 'tallyModeRed',
+					delay: '50',
+				}
+			]
+		},
+	] : [];
 
-	const Exp_NotSupportPreset =
-		self.config.product !== 'Tracking Camera'
-			? [
-					//=============== Exposure catalog =================
-					{
-						category: 'Exposure',
-						label: 'Gain Up',
-						bank: {
-							style: 'text',
-							text: 'GAIN\\nUP',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'expModeManu',
-							},
-							{
-								action: 'gainU',
-								delay: '50',
-							},
-						],
-					},
-					{
-						category: 'Exposure',
-						label: 'Gain Down',
-						bank: {
-							style: 'text',
-							text: 'GAIN\\nDOWN',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'expModeManu',
-							},
-							{
-								action: 'gainD',
-								delay: '50',
-							},
-						],
-					},
-			  ]
-			: []
+	const System_NotSupportPreset_2 = ((self.config.product !== "Box Camera") && (self.config.product !== "Tracking Camera")) ? [
+		{
+			category: 'System',
+			label: 'Tally Mode - Green',
+			bank: {
+				style: 'text',
+				text: 'Tally\\nGreen ON',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'tallyLampOn',
+				},
+				{
+					action: 'tallyModeGreen',
+					delay: '50',
+				}
+			]
+		},
+	] : [];
 
-	const PT_NotSupportPreset =
-		self.config.product !== 'Box Camera'
-			? [
-					//=============== Pan/Tilt Catalog =================
-					{
-						category: 'Pan/Tilt',
-						label: 'UP',
-						bank: {
-							style: 'png',
-							text: '',
-							png64: image_up,
-							pngalignment: 'center:center',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'up',
-								options: { panSpeed: 'C', tiltSpeed: 'C' },
-							},
-						],
-						release_actions: [
-							{
-								action: 'stop',
-							},
-						],
-					},
-					{
-						category: 'Pan/Tilt',
-						label: 'DOWN',
-						bank: {
-							style: 'png',
-							text: '',
-							png64: image_down,
-							pngalignment: 'center:center',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'down',
-								options: { panSpeed: 'C', tiltSpeed: 'C' },
-							},
-						],
-						release_actions: [
-							{
-								action: 'stop',
-							},
-						],
-					},
-					{
-						category: 'Pan/Tilt',
-						label: 'LEFT',
-						bank: {
-							style: 'png',
-							text: '',
-							png64: image_left,
-							pngalignment: 'center:center',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'left',
-								options: { panSpeed: 'C', tiltSpeed: 'C' },
-							},
-						],
-						release_actions: [
-							{
-								action: 'stop',
-							},
-						],
-					},
-					{
-						category: 'Pan/Tilt',
-						label: 'RIGHT',
-						bank: {
-							style: 'png',
-							text: '',
-							png64: image_right,
-							pngalignment: 'center:center',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'right',
-								options: { panSpeed: 'C', tiltSpeed: 'C' },
-							},
-						],
-						release_actions: [
-							{
-								action: 'stop',
-							},
-						],
-					},
-					{
-						category: 'Pan/Tilt',
-						label: 'UP LEFT',
-						bank: {
-							style: 'png',
-							text: '',
-							png64: image_up_left,
-							pngalignment: 'center:center',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'upLeft',
-								options: { panSpeed: 'C', tiltSpeed: 'C' },
-							},
-						],
-						release_actions: [
-							{
-								action: 'stop',
-							},
-						],
-					},
-					{
-						category: 'Pan/Tilt',
-						label: 'UP RIGHT',
-						bank: {
-							style: 'png',
-							text: '',
-							png64: image_up_right,
-							pngalignment: 'center:center',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'upRight',
-								options: { panSpeed: 'C', tiltSpeed: 'C' },
-							},
-						],
-						release_actions: [
-							{
-								action: 'stop',
-							},
-						],
-					},
-					{
-						category: 'Pan/Tilt',
-						label: 'DOWN LEFT',
-						bank: {
-							style: 'png',
-							text: '',
-							png64: image_down_left,
-							pngalignment: 'center:center',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'downLeft',
-								options: { panSpeed: 'C', tiltSpeed: 'C' },
-							},
-						],
-						release_actions: [
-							{
-								action: 'stop',
-							},
-						],
-					},
-					{
-						category: 'Pan/Tilt',
-						label: 'DOWN RIGHT',
-						bank: {
-							style: 'png',
-							text: '',
-							png64: image_down_right,
-							pngalignment: 'center:center',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'downRight',
-								options: { panSpeed: 'C', tiltSpeed: 'C' },
-							},
-						],
-						release_actions: [
-							{
-								action: 'stop',
-							},
-						],
-					},
-					{
-						category: 'Pan/Tilt',
-						label: 'Home',
-						bank: {
-							style: 'text',
-							text: 'HOME',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'home',
-							},
-						],
-					},
-			  ]
-			: []
+	const PT_NotSupportPreset = (self.config.product !== "Box Camera") ? [
+		//=============== Pan/Tilt Catalog =================
+		{
+			category: 'Pan/Tilt',
+			label: 'UP',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_up,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'up',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'DOWN',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_down,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'down',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'LEFT',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_left,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'left',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'RIGHT',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_right,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'right',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'UP LEFT',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_up_left,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'upLeft',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'UP RIGHT',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_up_right,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'upRight',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'DOWN LEFT',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_down_left,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'downLeft',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'DOWN RIGHT',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_down_right,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'downRight',
+					options: { panSpeed: 'C', tiltSpeed: 'C' },
+				}
+			],
+			release_actions: [
+				{
+					action: 'stop',
+				}
+			]
+		},
+		{
+			category: 'Pan/Tilt',
+			label: 'Home',
+			bank: {
+				style: 'text',
+				text: 'HOME',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'home',
+				}
+			]
+		},
+	] : [];
 
-	const Image_NotSupportPreset =
-		self.config.product !== 'Tracking Camera'
-			? [
-					//=============== Image catalog =================
-					{
-						category: 'Image',
-						label: 'Image Mode - Default',
-						bank: {
-							style: 'text',
-							text: 'Default\\nImage',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'imageModeDefault',
-							},
-						],
-					},
-					{
-						category: 'Image',
-						label: 'Brightness Up',
-						bank: {
-							style: 'text',
-							text: 'Brightness\\nUP',
-							size: '14',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'imageModeCustom',
-							},
-							{
-								action: 'brightU',
-								delay: '50',
-							},
-						],
-					},
-					{
-						category: 'Image',
-						label: 'Brightness Down',
-						bank: {
-							style: 'text',
-							text: 'Brightness\\nDOWN',
-							size: '14',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'imageModeCustom',
-							},
-							{
-								action: 'brightD',
-								delay: '50',
-							},
-						],
-					},
-					{
-						category: 'Image',
-						label: 'Sharpness Up',
-						bank: {
-							style: 'text',
-							text: 'Sharpness\\nUP',
-							size: '14',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'sharpU',
-							},
-						],
-					},
-					{
-						category: 'Image',
-						label: 'Sharpness Down',
-						bank: {
-							style: 'text',
-							text: 'Sharpness\\nDOWN',
-							size: '14',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'sharpD',
-							},
-						],
-					},
-			  ]
-			: []
+	const DigEffect_NotSupportPreset = (self.config.product !== 'Tracking Camera') ? [
+		{
+			category: 'Dig-Effect',
+			label: 'Mirror+Flip On',
+			bank: {
+				style: 'text',
+				text: 'MIRROR\\nFLIP\\nON',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'mirrorFlipOn',
+				}
+			]
+		},
+		{
+			category: 'Dig-Effect',
+			label: 'Mirror+Flip Off',
+			bank: {
+				style: 'text',
+				text: 'MIRROR\\nFLIP\\nOFF',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'mirrorFlipOff',
+				}
+			]
+		},
+	] : [];
 
-	const DigEffect_NotSupportPreset =
-		self.config.product !== 'Tracking Camera'
-			? [
-					{
-						category: 'Dig-Effect',
-						label: 'Mirror On',
-						bank: {
-							style: 'text',
-							text: 'MIRROR\\nON',
-							size: '14',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'mirrorOn',
-							},
-						],
-					},
-					{
-						category: 'Dig-Effect',
-						label: 'Mirror Off',
-						bank: {
-							style: 'text',
-							text: 'MIRROR\\nOFF',
-							size: '14',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'mirrorOff',
-							},
-						],
-					},
-					{
-						category: 'Dig-Effect',
-						label: 'Flip On',
-						bank: {
-							style: 'text',
-							text: 'FLIP\\nON',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'flipOn',
-							},
-						],
-					},
-					{
-						category: 'Dig-Effect',
-						label: 'Flip Off',
-						bank: {
-							style: 'text',
-							text: 'FLIP\\nOFF',
-							size: '18',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'flipOff',
-							},
-						],
-					},
-					{
-						category: 'Dig-Effect',
-						label: 'Mirror+Flip On',
-						bank: {
-							style: 'text',
-							text: 'MIRROR\\nFLIP\\nON',
-							size: '14',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'mirrorFlipOn',
-							},
-						],
-					},
-					{
-						category: 'Dig-Effect',
-						label: 'Mirror+Flip Off',
-						bank: {
-							style: 'text',
-							text: 'MIRROR\\nFLIP\\nOFF',
-							size: '14',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'mirrorFlipOff',
-							},
-						],
-					},
-			  ]
-			: []
+	const AutoTracking_NotSupportPreset = ((self.config.product !== 'PTZ Camera') && (self.config.product !== 'Box Camera')) ? [
+		//=============== Auto-Tracking catalog =================
+		{
+			category: 'Auto Tracking',
+			label: 'Auto-Tracking On',
+			bank: {
+				style: 'text',
+				text: 'Tracking\\nON',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'autoTrackingOn',
+				}
+			]
+		},
+		{
+			category: 'Auto Tracking',
+			label: 'Auto-Tracking Off',
+			bank: {
+				style: 'text',
+				text: 'Tracking\\nOFF',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0),
+			},
+			actions: [
+				{
+					action: 'autoTrackingOff',
+				}
+			]
+		},
+	] : [];
 
-	const AutoTracking_NotSupportPreset =
-		self.config.product !== 'PTZ Camera' && self.config.product !== 'Box Camera'
-			? [
-					//=============== Auto-Tracking catalog =================
-					{
-						category: 'Auto Tracking',
-						label: 'Auto-Tracking On',
-						bank: {
-							style: 'text',
-							text: 'Tracking\\nON',
-							size: '14',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'autoTrackingOn',
-							},
-						],
-					},
-					{
-						category: 'Auto Tracking',
-						label: 'Auto-Tracking Off',
-						bank: {
-							style: 'text',
-							text: 'Tracking\\nOFF',
-							size: '14',
-							color: '16777215',
-							bgcolor: self.rgb(0, 0, 0),
-						},
-						actions: [
-							{
-								action: 'autoTrackingOff',
-							},
-						],
-					},
-			  ]
-			: []
 
-	Array.prototype.push.apply(presets, presets_default)
-	Array.prototype.push.apply(presets, System_NotSupportPreset_1)
-	Array.prototype.push.apply(presets, System_NotSupportPreset_2)
-	Array.prototype.push.apply(presets, Exp_NotSupportPreset)
-	Array.prototype.push.apply(presets, PT_NotSupportPreset)
-	Array.prototype.push.apply(presets, Image_NotSupportPreset)
-	Array.prototype.push.apply(presets, DigEffect_NotSupportPreset)
-	Array.prototype.push.apply(presets, AutoTracking_NotSupportPreset)
+	Array.prototype.push.apply(presets, presets_default);
+	Array.prototype.push.apply(presets, System_NotSupportPreset_1);
+	Array.prototype.push.apply(presets, System_NotSupportPreset_2);
+	Array.prototype.push.apply(presets, PT_NotSupportPreset);
+	Array.prototype.push.apply(presets, DigEffect_NotSupportPreset);
+	Array.prototype.push.apply(presets, AutoTracking_NotSupportPreset);
 
-	self.setPresetDefinitions(presets)
-}
+	self.setPresetDefinitions(presets);
+};
 
 instance.prototype.actions = function (system) {
-	var self = this
+	var self = this;
 
-	const System_NotSupportActions_1 =
-		self.config.product !== 'Tracking Camera'
-			? {
-					tallyModeRed: { label: 'Tally Mode - Red' },
-			  }
-			: {}
+	const System_NotSupportActions_1 = (self.config.product !== 'Tracking Camera') ? {
+		'tallyModeRed': { label: 'Tally Mode - Red' },
+	} : {}
 
-	const System_NotSupportActions_2 =
-		self.config.product !== 'Box Camera' && self.config.product !== 'Tracking Camera'
-			? {
-					tallyModeGreen: { label: 'Tally Mode - Green' },
-					tallyModeYellow: { label: 'Tally Mode - Yellow' },
-			  }
-			: {}
+	const System_NotSupportActions_2 = ((self.config.product !== 'Box Camera') && (self.config.product !== 'Tracking Camera')) ? {
+		'tallyModeGreen': { label: 'Tally Mode - Green' },
+		'tallyModeYellow': { label: 'Tally Mode - Yellow' },
+	} : {}
 
-	const System_NotSupportActions_3 =
-		self.config.product !== 'Tracking Camera'
-			? {
-					tallyLampOn: { label: 'Tally Lamp On' },
-					tallyLampOff: { label: 'Tally Lamp Off' },
-			  }
-			: {}
+	const System_NotSupportActions_3 = (self.config.product !== 'Tracking Camera') ? {
+		'tallyLampOn': { label: 'Tally Lamp On' },
+		'tallyLampOff': { label: 'Tally Lamp Off' },
+	} : {}
 
 	const PToptions = {
 		options: [
@@ -1632,35 +1576,33 @@ instance.prototype.actions = function (system) {
 				label: 'Pan Speed Setting',
 				id: 'panSpeed',
 				default: 'C',
-				choices: SPEED,
+				choices: SPEED
 			},
 			{
 				type: 'dropdown',
 				label: 'Tilt Speed Setting',
 				id: 'tiltSpeed',
 				default: 'C',
-				choices: SPEED,
-			},
-		],
+				choices: SPEED
+			}
+		]
 	}
 
-	const PT_NotSupportActions =
-		self.config.product !== 'Box Camera'
-			? {
-					//=============== Pan/Tilt Catalog =================
-					up: { label: 'Tilt Up', ...PToptions },
-					down: { label: 'Tilt Down', ...PToptions },
-					left: { label: 'Pan Left', ...PToptions },
-					right: { label: 'Pan Right', ...PToptions },
-					upLeft: { label: 'Pan-Tilt_UpLeft', ...PToptions },
-					upRight: { label: 'Pan-Tilt_UpRight', ...PToptions },
-					downLeft: { label: 'Pan-Tilt_DownLeft', ...PToptions },
-					downRight: { label: 'Pan-Tilt_DownRight', ...PToptions },
-					stop: { label: 'Pan-Tilt_Stop' },
-					home: { label: 'Pan-Tilt_Home' },
-					reset: { label: 'Pan-Tilt_Reset' },
-			  }
-			: {}
+	const PT_NotSupportActions = (self.config.product !== "Box Camera") ? {
+		//=============== Pan/Tilt Catalog =================
+		'up': { label: 'Tilt Up', ...PToptions },
+		'down': { label: 'Tilt Down', ...PToptions },
+		'left': { label: 'Pan Left', ...PToptions },
+		'right': { label: 'Pan Right', ...PToptions },
+		'upLeft': { label: 'Pan-Tilt_UpLeft', ...PToptions },
+		'upRight': { label: 'Pan-Tilt_UpRight', ...PToptions },
+		'downLeft': { label: 'Pan-Tilt_DownLeft', ...PToptions },
+		'downRight': { label: 'Pan-Tilt_DownRight', ...PToptions },
+		'stop': { label: 'Pan-Tilt_Stop', },
+		'home': { label: 'Pan-Tilt_Home' },
+		'reset': { label: 'Pan-Tilt_Reset' },
+	} : {}
+
 
 	const zoomFocusOptions = {
 		options: [
@@ -1669,118 +1611,81 @@ instance.prototype.actions = function (system) {
 				label: 'Speed Setting',
 				id: 'speed',
 				default: '3',
-				choices: ZOOM_FOCUS_SPEED,
+				choices: ZOOM_FOCUS_SPEED
 			},
-		],
+		]
 	}
 
-	const Exp_NotSupportActions =
-		self.config.product !== 'Tracking Camera'
-			? {
-					//=============== Exposure catalog =================
-					gainU: { label: 'Gain Up' },
-					gainD: { label: 'Gain Down' },
-					expCompOn: { label: 'Exposure Compensation On' },
-					expCompOff: { label: 'Exposure Compensation Off' },
-			  }
-			: {}
+	const DigEffect_NotSupportActions = (self.config.product !== 'Tracking Camera') ? {
+		//=============== Dig-Effect catalog =================
+		'mirrorFlipOn': { label: 'Mirror + Flip On' },
+		'mirrorFlipOff': { label: 'Mirror + Flip Off' },
+	} : {}
 
-	const Image_NotSupportActions =
-		self.config.product !== 'Tracking Camera'
-			? {
-					//=============== Image catalog =================
-					imageModeDefault: { label: 'Image Mode - Default' },
-					imageModeCustom: { label: 'Image Mode - Custom' },
-					brightU: { label: 'Bright Up' },
-					brightD: { label: 'Bright Down' },
-					sharpU: { label: 'Sharpness Up' },
-					sharpD: { label: 'Sharpness Down' },
-			  }
-			: {}
+	const AutoTracking_NotSupportActions = ((self.config.product !== 'Box Camera') && (self.config.product !== 'PTZ Camera')) ? {
+		'autoTrackingOn': { label: 'Auto Tracking On' },
+		'autoTrackingOff': { label: 'Auto Tracking Off' },
+	} : {}
 
-	const DigEffect_NotSupportActions =
-		self.config.product !== 'Tracking Camera'
-			? {
-					//=============== Dig-Effect catalog =================
-					mirrorOn: { label: 'Mirror On' },
-					mirrorOff: { label: 'Mirror Off' },
-					flipOn: { label: 'Flip On' },
-					flipOff: { label: 'Flip Off' },
-					mirrorFlipOn: { label: 'Mirror + Flip On' },
-					mirrorFlipOff: { label: 'Mirror + Flip Off' },
-			  }
-			: {}
-
-	const AutoTracking_NotSupportActions =
-		self.config.product !== 'Box Camera' && self.config.product !== 'PTZ Camera'
-			? {
-					autoTrackingOn: { label: 'Auto Tracking On' },
-					autoTrackingOff: { label: 'Auto Tracking Off' },
-			  }
-			: {}
-
-	const Preset_SupportActions =
-		self.config.product !== 'Tracking Camera'
-			? {
-					//=============== Save / Recall	Preset catalog =================
-					savePset: {
-						label: 'Save Preset',
-						options: [
-							{
-								type: 'dropdown',
-								label: 'Preset Nr.',
-								id: 'val',
-								choices: PRESET,
-							},
-						],
-					},
-					recallPset: {
-						label: 'Recall Preset',
-						options: [
-							{
-								type: 'dropdown',
-								label: 'Preset Nr.',
-								id: 'val',
-								choices: PRESET,
-							},
-						],
-					},
-			  }
-			: {
-					savePset: {
-						label: 'Save Preset',
-						options: [
-							{
-								type: 'dropdown',
-								label: 'Preset Nr.',
-								id: 'val',
-								choices: PRESET_TR1,
-							},
-						],
-					},
-					recallPset: {
-						label: 'Recall Preset',
-						options: [
-							{
-								type: 'dropdown',
-								label: 'Preset Nr.',
-								id: 'val',
-								choices: PRESET_TR1,
-							},
-						],
-					},
-			  }
+	const Preset_SupportActions = (self.config.product !== 'Tracking Camera') ? {
+		//=============== Save / Recall	Preset catalog =================
+		'savePset': {
+			label: 'Save Preset',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Preset Nr.',
+					id: 'val',
+					choices: PRESET
+				}
+			]
+		},
+		'recallPset': {
+			label: 'Recall Preset',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Preset Nr.',
+					id: 'val',
+					choices: PRESET
+				}
+			]
+		},
+	} : {
+			'savePset': {
+				label: 'Save Preset',
+				options: [
+					{
+						type: 'dropdown',
+						label: 'Preset Nr.',
+						id: 'val',
+						choices: PRESET_TR1
+					}
+				]
+			},
+			'recallPset': {
+				label: 'Recall Preset',
+				options: [
+					{
+						type: 'dropdown',
+						label: 'Preset Nr.',
+						id: 'val',
+						choices: PRESET_TR1
+					}
+				]
+			},
+		}
 
 	const btnActions = {
 		//=============== System catalog =================
-		powerOn: { label: 'Power On' },
-		powerOff: { label: 'Power Off' },
-		menuOnOff: { label: 'Menu On/Off Toggle' },
-		menuEnter: { label: 'Menu Enter' },
-		menuUp: { label: 'Menu Up' },
-		menuDown: { label: 'Menu Down' },
-		menuLeft: { label: 'Menu Left' },
-		menuRight: { label: 'Menu Right' },
+		'powerOn': { label: 'Power On' },
+		'powerOff': { label: 'Power Off' },
+		'menuOnOff': { label: 'Menu On/Off Toggle' },
+		'menuEnter': { label: 'Menu Enter' },
+		'menuUp': { label: 'Menu Up' },
+		'menuDown': { label: 'Menu Down' },
+		'menuLeft': { label: 'Menu Left' },
+		'menuRight': { label: 'Menu Right' },
 		...System_NotSupportActions_1,
 		...System_NotSupportActions_2,
 		...System_NotSupportActions_3,
@@ -1789,455 +1694,396 @@ instance.prototype.actions = function (system) {
 		...PT_NotSupportActions,
 
 		//=============== Lens catalog =================
-		zoomS: { label: 'Zoom Stop' },
-		zoomI: { label: 'Zoom In', ...zoomFocusOptions },
-		zoomO: { label: 'Zoom Out', ...zoomFocusOptions },
-		focusS: { label: 'Focus Stop' },
-		focusF: { label: 'Focus Far', ...zoomFocusOptions },
-		focusN: { label: 'Focus Near', ...zoomFocusOptions },
-		focusM_AF: { label: 'Auto Focus Mode' },
-		focusM_MF: { label: 'Manual Focus Mode' },
-		focusOpaf: { label: 'One Push Auto Focus' },
+		'zoomS': { label: 'Zoom Stop' },
+		'zoomI': { label: 'Zoom In', ...zoomFocusOptions },
+		'zoomO': { label: 'Zoom Out', ...zoomFocusOptions },
+		'focusS': { label: 'Focus Stop' },
+		'focusF': { label: 'Focus Far', ...zoomFocusOptions },
+		'focusN': { label: 'Focus Near', ...zoomFocusOptions },
+		'focusM_AF': { label: 'Auto Focus Mode' },
+		'focusM_MF': { label: 'Manual Focus Mode' },
+		'focusOpaf': { label: 'One Push Auto Focus' },
 
 		//=============== Exposure catalog =================
-		expModeAuto: { label: 'Exposure Mode - Auto' },
-		expModeManu: { label: 'Exposure Mode - Manual' },
-		expModeShutterPri: { label: 'Exposure Mode - Shutter Priority' },
-		expModeIrisPri: { label: 'Exposure Mode - Iris Priority' },
-		shutU: { label: 'Shutter Up' },
-		shutD: { label: 'Shutter Down' },
-		irisU: { label: 'Iris Up' },
-		irisD: { label: 'Iris Down' },
-		...Exp_NotSupportActions,
-		expCompUp: { label: 'Exposure Compensation Up' },
-		expCompDown: { label: 'Exposure Compensation Down' },
-		backLightOn: { label: 'BackLight On' },
-		backLightOff: { label: 'BackLight Off' },
+		'expModeAuto': { label: 'Exposure Mode - Auto' },
+		'expModeManu': { label: 'Exposure Mode - Manual' },
+		'expModeShutterPri': { label: 'Exposure Mode - Shutter Priority' },
+		'expModeIrisPri': { label: 'Exposure Mode - Iris Priority' },
+		'shutU': { label: 'Shutter Up' },
+		'shutD': { label: 'Shutter Down' },
+		'irisU': { label: 'Iris Up' },
+		'irisD': { label: 'Iris Down' },
+		'expCompUp': { label: 'Exposure Compensation Up' },
+		'expCompDown': { label: 'Exposure Compensation Down' },
+		'backLightOn': { label: 'BackLight On' },
+		'backLightOff': { label: 'BackLight Off' },
+		'gainU': { label: 'Gain Up' },
+		'gainD': { label: 'Gain Down' },
+		'expCompOn': { label: 'Exposure Compensation On' },
+		'expCompOff': { label: 'Exposure Compensation Off' },
 
 		//=============== White Balance catalog =================
-		wbModeAuto: { label: 'White Balance Mode - Auto' },
-		wbModeOnePush: { label: 'White Balance Mode - One Push' },
-		wbModeManual: { label: 'White Balance Mode - Manual' },
-		onePushWB: { label: 'One Push WB' },
-		wbRGainU: { label: 'WB Red GAIN Up' },
-		wbRGainD: { label: 'WB Red GAIN Down' },
-		wbBGainU: { label: 'WB Blue GAIN Up' },
-		wbBGainD: { label: 'WB Blue GAIN Down' },
+		'wbModeAuto': { label: 'White Balance Mode - Auto' },
+		'wbModeOnePush': { label: 'White Balance Mode - One Push' },
+		'wbModeManual': { label: 'White Balance Mode - Manual' },
+		'onePushWB': { label: 'One Push WB' },
+		'wbRGainU': { label: 'WB Red GAIN Up' },
+		'wbRGainD': { label: 'WB Red GAIN Down' },
+		'wbBGainU': { label: 'WB Blue GAIN Up' },
+		'wbBGainD': { label: 'WB Blue GAIN Down' },
 
 		//=============== Image catalog =================
-		...Image_NotSupportActions,
+		'imageModeDefault': { label: 'Image Mode - Default' },
+		'imageModeCustom': { label: 'Image Mode - Custom' },
+		'brightU': { label: 'Bright Up' },
+		'brightD': { label: 'Bright Down' },
+		'sharpU': { label: 'Sharpness Up' },
+		'sharpD': { label: 'Sharpness Down' },
 
 		//=============== Save / Recall	Preset catalog =================
 		...Preset_SupportActions,
 
 		//=============== Dig-Effect catalog =================
+		'mirrorOn': { label: 'Mirror On' },
+		'mirrorOff': { label: 'Mirror Off' },
+		'flipOn': { label: 'Flip On' },
+		'flipOff': { label: 'Flip Off' },
 		...DigEffect_NotSupportActions,
 
 		//=============== Auto-Tracking catalog ===============
-		...AutoTracking_NotSupportActions,
+		...AutoTracking_NotSupportActions
 	}
-	self.setActions(btnActions)
+	self.system.emit('instance_actions', self.id, btnActions);
 }
 
 instance.prototype.action = function (action) {
-	var self = this
-	var opt = action.options
-	var cmd = ''
+	var self = this;
+	var opt = action.options;
+	var cmd = '';
 
 	switch (action.action) {
 		//=============== System catalog ===============
 		case 'powerOn':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x00\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x00\x02\xFF';
+			break;
 
 		case 'powerOff':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x00\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x00\x03\xFF';
+			break;
 
 		case 'menuOnOff':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x06\x10\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x06\x10\xFF';
+			break;
 
 		case 'menuEnter':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x7E\x01\x02\x00\x01\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x7E\x01\x02\x00\x01\xFF';
+			break;
 
 		case 'menuUp':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01\x01\x01\x03\x01\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01\x01\x01\x03\x01\xFF';
+			break;
 
 		case 'menuDown':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01\x01\x01\x03\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01\x01\x01\x03\x02\xFF';
+			break;
 
 		case 'menuLeft':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01\x01\x01\x01\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01\x01\x01\x01\x03\xFF';
+			break;
 
 		case 'menuRight':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01\x01\x01\x02\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01\x01\x01\x02\x03\xFF';
+			break;
 
 		case 'tallyModeRed':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x7E\x01\x0A\x01\x05\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x7E\x01\x0A\x01\x05\xFF';
+			break;
 
 		case 'tallyModeGreen':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x7E\x01\x0A\x01\x06\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x7E\x01\x0A\x01\x06\xFF';
+			break;
 
 		case 'tallyModeYellow':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x7E\x01\x0A\x01\x07\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x7E\x01\x0A\x01\x07\xFF';
+			break;
 
 		case 'tallyLampOn':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x7E\x01\x0A\x00\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x7E\x01\x0A\x00\x02\xFF';
+			break;
 
 		case 'tallyLampOff':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x7E\x01\x0A\x00\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x7E\x01\x0A\x00\x03\xFF';
+			break;
 
 		//=============== Pan/Tilt Catalog ===============
 		case 'left':
-			cmd =
-				String.fromCharCode(parseInt(self.config.id)) +
-				'\x01\x06\x01' +
-				String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xff) +
-				String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xff) +
-				'\x01\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01' + String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xFF) + String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xFF) + '\x01\x03\xFF';
+			break;
 
 		case 'right':
-			cmd =
-				String.fromCharCode(parseInt(self.config.id)) +
-				'\x01\x06\x01' +
-				String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xff) +
-				String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xff) +
-				'\x02\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01' + String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xFF) + String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xFF) + '\x02\x03\xFF';
+			break;
 
 		case 'up':
-			cmd =
-				String.fromCharCode(parseInt(self.config.id)) +
-				'\x01\x06\x01' +
-				String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xff) +
-				String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xff) +
-				'\x03\x01\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01' + String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xFF) + String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xFF) + '\x03\x01\xFF';
+			break;
 
 		case 'down':
-			cmd =
-				String.fromCharCode(parseInt(self.config.id)) +
-				'\x01\x06\x01' +
-				String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xff) +
-				String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xff) +
-				'\x03\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01' + String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xFF) + String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xFF) + '\x03\x02\xFF';
+			break;
 
 		case 'upLeft':
-			cmd =
-				String.fromCharCode(parseInt(self.config.id)) +
-				'\x01\x06\x01' +
-				String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xff) +
-				String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xff) +
-				'\x01\x01\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01' + String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xFF) + String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xFF) + '\x01\x01\xFF';
+			break;
 
 		case 'upRight':
-			cmd =
-				String.fromCharCode(parseInt(self.config.id)) +
-				'\x01\x06\x01' +
-				String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xff) +
-				String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xff) +
-				'\x02\x01\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01' + String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xFF) + String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xFF) + '\x02\x01\xFF';
+			break;
 
 		case 'downLeft':
-			cmd =
-				String.fromCharCode(parseInt(self.config.id)) +
-				'\x01\x06\x01' +
-				String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xff) +
-				String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xff) +
-				'\x01\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01' + String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xFF) + String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xFF) + '\x01\x02\xFF';
+			break;
 
 		case 'downRight':
-			cmd =
-				String.fromCharCode(parseInt(self.config.id)) +
-				'\x01\x06\x01' +
-				String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xff) +
-				String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xff) +
-				'\x02\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01' + String.fromCharCode(parseInt(opt.panSpeed, 16) & 0xFF) + String.fromCharCode(parseInt(opt.tiltSpeed, 16) & 0xFF) + '\x02\x02\xFF';
+			break;
 
 		case 'stop':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01\x01\x01\x03\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x01\x01\x01\x03\x03\xFF';
+			break;
 
 		case 'home':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x04\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x04\xFF';
+			break;
 
 		case 'reset':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x05\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x06\x05\xFF';
+			break;
 
 		//=============== Lens catalog ===============
 		case 'zoomS':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x07\x00\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x07\x00\xFF';
+			break;
 
-		case 'zoomI': //tele
-			cmd =
-				String.fromCharCode(parseInt(self.config.id)) +
-				'\x01\x04\x07' +
-				String.fromCharCode(0x20 + (parseInt(opt.speed, 16) & 0x0f)) +
-				'\xFF'
-			break
+		case 'zoomI': //tele    
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x07' + String.fromCharCode(0x20 + (parseInt(opt.speed, 16) & 0x0F)) + '\xFF';
+			break;
 
-		case 'zoomO': //wide
-			cmd =
-				String.fromCharCode(parseInt(self.config.id)) +
-				'\x01\x04\x07' +
-				String.fromCharCode(0x30 + (parseInt(opt.speed, 16) & 0x0f)) +
-				'\xFF'
-			break
+		case 'zoomO': //wide                                    
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x07' + String.fromCharCode(0x30 + (parseInt(opt.speed, 16) & 0x0F)) + '\xFF';
+			break;
 
 		case 'focusS':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x08\x00\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x08\x00\xFF';
+			break;
 
 		case 'focusF':
-			cmd =
-				String.fromCharCode(parseInt(self.config.id)) +
-				'\x01\x04\x08' +
-				String.fromCharCode(0x20 + (parseInt(opt.speed, 16) & 0x0f)) +
-				'\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x08' + String.fromCharCode(0x20 + (parseInt(opt.speed, 16) & 0x0F)) + '\xFF';
+			break;
 
 		case 'focusN':
-			cmd =
-				String.fromCharCode(parseInt(self.config.id)) +
-				'\x01\x04\x08' +
-				String.fromCharCode(0x30 + (parseInt(opt.speed, 16) & 0x0f)) +
-				'\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x08' + String.fromCharCode(0x30 + (parseInt(opt.speed, 16) & 0x0F)) + '\xFF';
+			break;
 
 		case 'focusM_AF':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x38\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x38\x02\xFF';
+			break;
 
 		case 'focusM_MF':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x38\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x38\x03\xFF';
+			break;
 
 		case 'focusOpaf':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x18\x01\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x18\x01\xFF';
+			break;
 
 		//=============== Exposure catalog ===============
 		case 'expModeAuto':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x39\x00\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x39\x00\xFF';
+			break;
 
 		case 'expModeManu':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x39\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x39\x03\xFF';
+			break;
 
 		case 'expModeShutterPri':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x39\x0A\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x39\x0A\xFF';
+			break;
 
 		case 'expModeIrisPri':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x39\x0B\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x39\x0B\xFF';
+			break;
 
 		case 'shutU':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0A\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0A\x02\xFF';
+			break;
 
 		case 'shutD':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0A\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0A\x03\xFF';
+			break;
 
 		case 'irisU':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0B\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0B\x02\xFF';
+			break;
 
 		case 'irisD':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0B\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0B\x03\xFF';
+			break;
 
 		case 'gainU':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0C\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0C\x02\xFF';
+			break;
 
 		case 'gainD':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0C\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0C\x03\xFF';
+			break;
 
 		case 'expCompOn':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3E\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3E\x02\xFF';
+			break;
 
 		case 'expCompOff':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3E\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3E\x03\xFF';
+			break;
 
 		case 'expCompUp':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0E\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0E\x02\xFF';
+			break;
 
 		case 'expCompDown':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0E\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0E\x03\xFF';
+			break;
 
 		case 'backLightOn':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x33\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x33\x02\xFF';
+			break;
 
 		case 'backLightOff':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x33\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x33\x03\xFF';
+			break;
 
 		//=============== White Balance catalog ===============
 		case 'wbModeAuto':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x35\x00\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x35\x00\xFF';
+			break;
 
 		case 'wbModeOnePush':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x35\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x35\x03\xFF';
+			break;
 
 		case 'wbModeManual':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x35\x05\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x35\x05\xFF';
+			break;
 
 		case 'onePushWB':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x10\x05\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x10\x05\xFF';
+			break;
 
 		case 'wbRGainU':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x03\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x03\x02\xFF';
+			break;
 
 		case 'wbRGainD':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x03\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x03\x03\xFF';
+			break;
 
 		case 'wbBGainU':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x04\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x04\x02\xFF';
+			break;
 
 		case 'wbBGainD':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x04\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x04\x03\xFF';
+			break;
 
 		//=============== Image catalog ===============
 		case 'imageModeDefault':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3F\x04\x00\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3F\x04\x00\xFF';
+			break;
 
 		case 'imageModeCustom':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3F\x04\x01\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3F\x04\x01\xFF';
+			break;
 
 		case 'brightU':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0D\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0D\x02\xFF';
+			break;
 
 		case 'brightD':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0D\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x0D\x03\xFF';
+			break;
 
 		case 'sharpU':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x02\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x02\x02\xFF';
+			break;
 
 		case 'sharpD':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x02\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x02\x03\xFF';
+			break;
 
 		//=============== Save / Recall	Preset catalog ===============
 		case 'savePset':
-			cmd =
-				String.fromCharCode(parseInt(self.config.id)) +
-				'\x01\x04\x3F\x01' +
-				String.fromCharCode(parseInt(opt.val, 16) & 0xff) +
-				'\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3F\x01' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + '\xFF';
+			break;
 
 		case 'recallPset':
-			cmd =
-				String.fromCharCode(parseInt(self.config.id)) +
-				'\x01\x04\x3F\x02' +
-				String.fromCharCode(parseInt(opt.val, 16) & 0xff) +
-				'\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3F\x02' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + '\xFF';
+			break;
 
 		//=============== Dig-Effect catalog ===============
 		case 'mirrorOn':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x61\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x61\x02\xFF';
+			break;
 
 		case 'mirrorOff':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x61\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x61\x03\xFF';
+			break;
 
 		case 'flipOn':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x66\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x66\x02\xFF';
+			break;
 
 		case 'flipOff':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x66\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x66\x03\xFF';
+			break;
 
 		case 'mirrorFlipOn':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x67\x02\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x67\x02\xFF';
+			break;
 
 		case 'mirrorFlipOff':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x67\x03\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x67\x03\xFF';
+			break;
 
 		//=============== Auto-Tracking catalog ===============
 		case 'autoTrackingOn':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3F\x02\x50\xFF'
-			break
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3F\x02\x50\xFF';
+			break;
 
 		case 'autoTrackingOff':
-			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3F\x02\x51\xFF'
-			break
-	}
-	self.sendVISCACommand(cmd)
-}
+			cmd = String.fromCharCode(parseInt(self.config.id)) + '\x01\x04\x3F\x02\x51\xFF';
+			break;
 
-instance_skel.extendedBy(instance)
+	}
+	self.sendVISCACommand(cmd);
+};
+
+instance_skel.extendedBy(instance);
 
 // Variables for Base64 image data do not edit
-var image_up =
-	'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6AQMAAAApyY3OAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAIFJREFUKM+90EEKgzAQRmFDFy49ghcp5FquVPBighcRegHBjWDJ68D8U6F7m00+EnhkUlW3ru6rdyCV0INQzSg1zFLLKmU2aeCQQMEEJXIQORRsTLNyKJhNm3IoaPBg4mQorp2Mh1+00kKN307o/bZrpt5O/FlPU/c75X91/fPd6wPRD1eHyHEL4wAAAABJRU5ErkJggg=='
+var image_up = 'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6AQMAAAApyY3OAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAIFJREFUKM+90EEKgzAQRmFDFy49ghcp5FquVPBighcRegHBjWDJ68D8U6F7m00+EnhkUlW3ru6rdyCV0INQzSg1zFLLKmU2aeCQQMEEJXIQORRsTLNyKJhNm3IoaPBg4mQorp2Mh1+00kKN307o/bZrpt5O/FlPU/c75X91/fPd6wPRD1eHyHEL4wAAAABJRU5ErkJggg==';
 
-var image_down =
-	'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6AQMAAAApyY3OAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAIlJREFUKM/F0DEOwyAMBVAjDxk5Qo7CtdiClIv1KJF6gUpZIhXxY2zTDJ2benoS8LFN9MsKbYjxF2XRS1UZ4bCeGFztFmNqphURpidm146kpwFvLDYJpPQtLSLNoySyP2bRpoqih2oSFW8K3lYAxmJGXA88XMnjeuDmih7XA8vXvNeeqX6U6aY6AacbWAQNWOPUAAAAAElFTkSuQmCC'
+var image_down = 'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6AQMAAAApyY3OAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAIlJREFUKM/F0DEOwyAMBVAjDxk5Qo7CtdiClIv1KJF6gUpZIhXxY2zTDJ2benoS8LFN9MsKbYjxF2XRS1UZ4bCeGFztFmNqphURpidm146kpwFvLDYJpPQtLSLNoySyP2bRpoqih2oSFW8K3lYAxmJGXA88XMnjeuDmih7XA8vXvNeeqX6U6aY6AacbWAQNWOPUAAAAAElFTkSuQmCC';
 
-var image_left =
-	'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6AQMAAAApyY3OAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAHpJREFUKM+1kTEOgCAQBM9Q2JjwA/mJPA2fxlN4giWF8TRBBhMpbKSaZie3i8gPb4Y8FNZKGm8YIAONkNWacIruQLejy+gyug1dQhfRqZa0v6gYA6QfqSWapZnto1B6XdUuFaVHoJunr2MD21nIdJYUEhLYfoGmP777BKKIXC0eYSD5AAAAAElFTkSuQmCC'
+var image_left = 'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6AQMAAAApyY3OAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAHpJREFUKM+1kTEOgCAQBM9Q2JjwA/mJPA2fxlN4giWF8TRBBhMpbKSaZie3i8gPb4Y8FNZKGm8YIAONkNWacIruQLejy+gyug1dQhfRqZa0v6gYA6QfqSWapZnto1B6XdUuFaVHoJunr2MD21nIdJYUEhLYfoGmP777BKKIXC0eYSD5AAAAAElFTkSuQmCC';
 
-var image_right =
-	'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6AQMAAAApyY3OAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAHhJREFUKM+10LERgCAMQFE4CktHcBRWcRMYzVEcwdKCI+od+fGksVCq3/AuiXOfvZnaNXzRClVrEKtMLdSqP2RTRQAFMAFGwAlw7MAk0sAzGnhVoerLKg/F5Pv4NoFNZZNGpk9sxJYeLsDdL5T7S8IFOM/R3OZ+fQeQZV9pMy+bVgAAAABJRU5ErkJggg=='
+var image_right = 'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6AQMAAAApyY3OAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAHhJREFUKM+10LERgCAMQFE4CktHcBRWcRMYzVEcwdKCI+od+fGksVCq3/AuiXOfvZnaNXzRClVrEKtMLdSqP2RTRQAFMAFGwAlw7MAk0sAzGnhVoerLKg/F5Pv4NoFNZZNGpk9sxJYeLsDdL5T7S8IFOM/R3OZ+fQeQZV9pMy+bVgAAAABJRU5ErkJggg==';
 
-var image_up_right =
-	'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6CAMAAAAk2e+/AAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAABhlBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+X02G5AAAAgXRSTlMAAte32QZhZx7d+TywDTf8/d5VstYPOxULNvKmSY8TFBrxyeGCluJeELQ5uw7ULND4BedlKuv2P/vDA8UgCk30WO41s8+5X8dABAz6QhHVaR156JpPnihSfTJDNOMBm4bzSICqr23NsRjcGRbtjTCS2lzsOmyu9+WLKb2fTL8+RPDhqO4yAAABfElEQVRYw+3WZW/CUBQG4AO0FBsOwwcMm7sLc3d3d3e388/HGGs7lpD0tsm+9P3S5CT3SdPec+8BkCNHzv9FAVAAEABYdQDkA7jo9GNUIDMBzstb5vr0/Gx8Z35zOjI36R2xbu+619eWa2xCoK0FClF5h1cWxDHEwilEOyLlQc8hokoAlMRcESBh7siQlJBWKkijNaHuPrWBED9iYiDQ7Pv1D4Z4/DXyFo2JgeAghQEkEgAvT6IgNo/PIUmgd62oj80mqEIpINoXRkmg2j2UBDIWVXKLTSXEUIOF/xbV5aRQsJvvUOoqMqjZZ+c7FcX8ThYCtTbxHV0fkEGDA73D3Dpzi/6rWEYAdSn579PZ/t3IBJChkef0dLRlHXdkJ6TSmSnmiYPq1LQIiGHX9BvZYinJ7/+R6q1czUG0j9KSOTxDc6UhshZhMIQrS78mncwZtzErrNcYL6V2Zd0tJ6i7QFtAYPcvHv25W6J+/Y3BrRA/x6WGuGN5mpUjhyyfsGtrpKE95HoAAAAASUVORK5CYII='
+var image_up_right = 'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6CAMAAAAk2e+/AAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAABhlBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+X02G5AAAAgXRSTlMAAte32QZhZx7d+TywDTf8/d5VstYPOxULNvKmSY8TFBrxyeGCluJeELQ5uw7ULND4BedlKuv2P/vDA8UgCk30WO41s8+5X8dABAz6QhHVaR156JpPnihSfTJDNOMBm4bzSICqr23NsRjcGRbtjTCS2lzsOmyu9+WLKb2fTL8+RPDhqO4yAAABfElEQVRYw+3WZW/CUBQG4AO0FBsOwwcMm7sLc3d3d3e388/HGGs7lpD0tsm+9P3S5CT3SdPec+8BkCNHzv9FAVAAEABYdQDkA7jo9GNUIDMBzstb5vr0/Gx8Z35zOjI36R2xbu+619eWa2xCoK0FClF5h1cWxDHEwilEOyLlQc8hokoAlMRcESBh7siQlJBWKkijNaHuPrWBED9iYiDQ7Pv1D4Z4/DXyFo2JgeAghQEkEgAvT6IgNo/PIUmgd62oj80mqEIpINoXRkmg2j2UBDIWVXKLTSXEUIOF/xbV5aRQsJvvUOoqMqjZZ+c7FcX8ThYCtTbxHV0fkEGDA73D3Dpzi/6rWEYAdSn579PZ/t3IBJChkef0dLRlHXdkJ6TSmSnmiYPq1LQIiGHX9BvZYinJ7/+R6q1czUG0j9KSOTxDc6UhshZhMIQrS78mncwZtzErrNcYL6V2Zd0tJ6i7QFtAYPcvHv25W6J+/Y3BrRA/x6WGuGN5mpUjhyyfsGtrpKE95HoAAAAASUVORK5CYII=';
 
-var image_down_right =
-	'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6CAMAAAAk2e+/AAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAABXFBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9jYfXuAAAAc3RSTlMAQ98Ox1j9gAtRNTqBPfgu9p/MTQ+G1Qfx7Y0VBYyJgjkGd3ysU+Zz1IQvMM20PgwBp8Mi4TSUiDvlPxylsaF2WfcjJh0S+wLzQLmY4l/ovX3ra1rPLAOSKa4RUEvgcZwbFHqPzodGbX7qPMvCtsEq1laguT+HEwAAAVlJREFUWMPt1sduwkAQgOGxDfFCIITe0nvvvZHee++992TeX4pJQIC9hPWaQ6T41x6skfY7WGPJAGZm/6qgZjIH4AMgOp2Lq32batTkdW/trPt9+qC70DVmSKS2BXF7A1fX9DDnN2FUSpe8y5hID3SZuJMmrcwmoSFm5vD0BDWSNTnCUmZoD1PZtJCDGfIgRUpBMjPkR4rEAwUtFIkHAkKRuCCaxAdRJE5IK/FCGumWF1JLEW5ILfFD2ST9UBaJA6JLPBCQ57xAJcp5NQbtSgBReJSsH8QI5No8ODo+u397ecL3T35IGhcRA4jig8E9qmjAX2OGnAV5ggrxr0ELOaByVmg6B1TGvEYyTvxcKUaMv/ii7xN/VAZYY2dfSHkkPOYY7Kpf7OmLzLfGPIFGd6izWrRUjdYt9Xfo+ULsLpgRKqGtGyadAEIUmnuhXSAwMAXD5j+omZlZRl+X30CWTm2dHwAAAABJRU5ErkJggg=='
+var image_down_right = 'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6CAMAAAAk2e+/AAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAABXFBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9jYfXuAAAAc3RSTlMAQ98Ox1j9gAtRNTqBPfgu9p/MTQ+G1Qfx7Y0VBYyJgjkGd3ysU+Zz1IQvMM20PgwBp8Mi4TSUiDvlPxylsaF2WfcjJh0S+wLzQLmY4l/ovX3ra1rPLAOSKa4RUEvgcZwbFHqPzodGbX7qPMvCtsEq1laguT+HEwAAAVlJREFUWMPt1sduwkAQgOGxDfFCIITe0nvvvZHee++992TeX4pJQIC9hPWaQ6T41x6skfY7WGPJAGZm/6qgZjIH4AMgOp2Lq32batTkdW/trPt9+qC70DVmSKS2BXF7A1fX9DDnN2FUSpe8y5hID3SZuJMmrcwmoSFm5vD0BDWSNTnCUmZoD1PZtJCDGfIgRUpBMjPkR4rEAwUtFIkHAkKRuCCaxAdRJE5IK/FCGumWF1JLEW5ILfFD2ST9UBaJA6JLPBCQ57xAJcp5NQbtSgBReJSsH8QI5No8ODo+u397ecL3T35IGhcRA4jig8E9qmjAX2OGnAV5ggrxr0ELOaByVmg6B1TGvEYyTvxcKUaMv/ii7xN/VAZYY2dfSHkkPOYY7Kpf7OmLzLfGPIFGd6izWrRUjdYt9Xfo+ULsLpgRKqGtGyadAEIUmnuhXSAwMAXD5j+omZlZRl+X30CWTm2dHwAAAABJRU5ErkJggg==';
 
-var image_up_left =
-	'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6CAMAAAAk2e+/AAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAABLFBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9PVkEkAAAAY3RSTlMAAQ/6Uc0OEAvHTzL7TcudsMHvdwnfUwMcG8UGiIfTrIkg9QI+/ZTDe460km73LNovCo1vQUuR4Lwk45/OK+3UERTkekziZlSK8QQnoOsFaaXmLqOylvPZLYDRZTUWUpiTDfAuEmiSAAABUklEQVRYw+3WZ2+DMBAG4EtTygrQ7NHsJt1777333vv+/38o6gIMSo0dqf3AK1lIZ/mRjPEJgCBBgvxtQr8WqDKbCiWUG1AnYXU7C7UJqKQSR5oKQwqIPphsYW24nEPjJCYXilf9F+G+qeTmThTP5w8X8gK9NLqOGMGPhD8fdXtBkGihlmlsmF5aqK2xg9FmQe3/DupuEhTpoT41z/V1HVHfxWRRo/6ORBfyjILx9mRo+2MDlS3ggF5q4uP9qzmVNjfOA+EDdDLcWA8IW6FJEJPkCbFI3hCDZEFVPsmC7mQuyYJ0iUuyIAG4JDvEJTkgHskJcUgExC6RECmxQ4REDa24ILsU6wL/rfYHskmX9C87Pfi9aA5cUmnRx/kffDmncSCkat7X342KSzOIuesNR1WSl7GU8Xfbbs9Gyoo0TvRp6Tie8d2TOsyx51UMEiQIS94B13oTqqYgGGoAAAAASUVORK5CYII='
+var image_up_left = 'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6CAMAAAAk2e+/AAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAABLFBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9PVkEkAAAAY3RSTlMAAQ/6Uc0OEAvHTzL7TcudsMHvdwnfUwMcG8UGiIfTrIkg9QI+/ZTDe460km73LNovCo1vQUuR4Lwk45/OK+3UERTkekziZlSK8QQnoOsFaaXmLqOylvPZLYDRZTUWUpiTDfAuEmiSAAABUklEQVRYw+3WZ2+DMBAG4EtTygrQ7NHsJt1777333vv+/38o6gIMSo0dqf3AK1lIZ/mRjPEJgCBBgvxtQr8WqDKbCiWUG1AnYXU7C7UJqKQSR5oKQwqIPphsYW24nEPjJCYXilf9F+G+qeTmThTP5w8X8gK9NLqOGMGPhD8fdXtBkGihlmlsmF5aqK2xg9FmQe3/DupuEhTpoT41z/V1HVHfxWRRo/6ORBfyjILx9mRo+2MDlS3ggF5q4uP9qzmVNjfOA+EDdDLcWA8IW6FJEJPkCbFI3hCDZEFVPsmC7mQuyYJ0iUuyIAG4JDvEJTkgHskJcUgExC6RECmxQ4REDa24ILsU6wL/rfYHskmX9C87Pfi9aA5cUmnRx/kffDmncSCkat7X342KSzOIuesNR1WSl7GU8Xfbbs9Gyoo0TvRp6Tie8d2TOsyx51UMEiQIS94B13oTqqYgGGoAAAAASUVORK5CYII=';
 
-var image_down_left =
-	'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6CAMAAAAk2e+/AAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAABg1BMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8aT76cAAAAgHRSTlMAafwJfflezc+3WA7Z5Rk6PAvpBNE73kJT89QxZ48czNIv9A1DnI3qKQUaymjT4a7HdVuGf85LR20CVHr+tLBlA0GvYSTYZEnbAcazNPX4yB4GrAgnmL6Bcj4qIVKIe8kdVadIEe27B90bOG/3Er1rYJq1wibyh+4Q5CMzRllMXDo5euMAAAGfSURBVFjD7dblUwJBGAbw5aSlBJRGQERBkLC7u7u7u7veP90jDnaEcdhjP+k9X5h9Zu43O7PLe4eQECH/KGsIaUooOEcLK75LpehH628idSrE+nMANfyQ3MY2BRm0C6mM462tUwJAJtVyUB1WmsoSFZEk46D6TBcYS3UKPpCYawxD5VxHImVD/RHIxMQbGintkGQcppkcOkuutQPYfkDfmjck556ZTSydve2YY5UWk0Mww672VPh+XFqCU8tA+whtL+KOpa+bF3Rh8B4ymDNaSnSzG9IPIpsL34/HTPZfS58auMPYuYNMWcQXOsD3U9ZDOkZkkCvqwSIqUI2WfEDmgiQxRANiIp8GKtDLO6/Znw19oOdXhKoROtEUBr1F5Y9f4dt1XygqKgh6YqcHwMQkQBWICr1H6czTgrpoQde0IGnekJEWNEwLMv/GPDDB/M/fDioVeLYA5GqoYt+xNRY4toJkCiBUG7vTEVxJu2Z549RbqXQuba7uVDZWO66mgw6d7kYaEPvvCb+REIp/srGzLP4aa0n8zKFkKUSIkD+Qb9QrYMvxAbaBAAAAAElFTkSuQmCC'
+var image_down_left = 'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6CAMAAAAk2e+/AAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAABg1BMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8aT76cAAAAgHRSTlMAafwJfflezc+3WA7Z5Rk6PAvpBNE73kJT89QxZ48czNIv9A1DnI3qKQUaymjT4a7HdVuGf85LR20CVHr+tLBlA0GvYSTYZEnbAcazNPX4yB4GrAgnmL6Bcj4qIVKIe8kdVadIEe27B90bOG/3Er1rYJq1wibyh+4Q5CMzRllMXDo5euMAAAGfSURBVFjD7dblUwJBGAbw5aSlBJRGQERBkLC7u7u7u7veP90jDnaEcdhjP+k9X5h9Zu43O7PLe4eQECH/KGsIaUooOEcLK75LpehH628idSrE+nMANfyQ3MY2BRm0C6mM462tUwJAJtVyUB1WmsoSFZEk46D6TBcYS3UKPpCYawxD5VxHImVD/RHIxMQbGintkGQcppkcOkuutQPYfkDfmjck556ZTSydve2YY5UWk0Mww672VPh+XFqCU8tA+whtL+KOpa+bF3Rh8B4ymDNaSnSzG9IPIpsL34/HTPZfS58auMPYuYNMWcQXOsD3U9ZDOkZkkCvqwSIqUI2WfEDmgiQxRANiIp8GKtDLO6/Znw19oOdXhKoROtEUBr1F5Y9f4dt1XygqKgh6YqcHwMQkQBWICr1H6czTgrpoQde0IGnekJEWNEwLMv/GPDDB/M/fDioVeLYA5GqoYt+xNRY4toJkCiBUG7vTEVxJu2Z549RbqXQuba7uVDZWO66mgw6d7kYaEPvvCb+REIp/srGzLP4aa0n8zKFkKUSIkD+Qb9QrYMvxAbaBAAAAAElFTkSuQmCC';
 
-exports = module.exports = instance
+exports = module.exports = instance;

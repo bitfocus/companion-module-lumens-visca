@@ -1,3 +1,7 @@
+## Companion Module Version : 3.0.0
+
+=================================================================================
+
 ## companion-module-lumens-visca
 
 This module uses the Sony Visca protocol to control Lumens cameras.
